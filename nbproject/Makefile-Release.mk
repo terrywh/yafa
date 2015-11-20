@@ -36,7 +36,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/database_mysql.o \
-	${OBJECTDIR}/east/value.o \
 	${OBJECTDIR}/easy/class.o \
 	${OBJECTDIR}/easy/module.o \
 	${OBJECTDIR}/easy/util.o \
@@ -72,11 +71,6 @@ ${OBJECTDIR}/database_mysql.o: database_mysql.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/../php/include/php -I/../php/include/php/Zend -I/../php/include/php/main -I/../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql.o database_mysql.cpp
-
-${OBJECTDIR}/east/value.o: east/value.cpp 
-	${MKDIR} -p ${OBJECTDIR}/east
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I/../php/include/php -I/../php/include/php/Zend -I/../php/include/php/main -I/../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/east/value.o east/value.cpp
 
 ${OBJECTDIR}/easy/class.o: easy/class.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy

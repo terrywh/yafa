@@ -9,7 +9,6 @@
       <itemPath>easy/module.h</itemPath>
       <itemPath>easy/param.h</itemPath>
       <itemPath>easy/util.cpp</itemPath>
-      <itemPath>east/value.cpp</itemPath>
       <itemPath>easy/value.h</itemPath>
       <itemPath>easy/value_array.cpp</itemPath>
       <itemPath>easy/value_array.h</itemPath>
@@ -70,8 +69,6 @@
       <item path="database_mysql.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="database_mysql.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="east/value.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="easy.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -140,8 +137,6 @@
       <item path="database_mysql.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="database_mysql.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="east/value.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="easy.h" ex="false" tool="3" flavor2="0">
       </item>
