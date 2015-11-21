@@ -4,6 +4,35 @@ namespace easy {
 
 module_t* module_t::_inst;
 
+int module_t::module_startup(INIT_FUNC_ARGS) {
+    for(auto i=module_t::_inst->_classes_map.begin(); i!= module_t::_inst->_classes_map.end(); ++i) {
+        i->second->module_startup();
+    }
+    return SUCCESS;
+}
+int module_t::module_shutdown(SHUTDOWN_FUNC_ARGS) {
+    for(auto i=module_t::_inst->_classes_map.begin(); i!= module_t::_inst->_classes_map.end(); ++i) {
+        i->second->module_shutdown();
+    }
+    return SUCCESS;
+}
+int module_t::request_startup(INIT_FUNC_ARGS) {
+    for(auto i=module_t::_inst->_classes_map.begin(); i!= module_t::_inst->_classes_map.end(); ++i) {
+        i->second->request_startup();
+    }
+    return SUCCESS;
+}
+int module_t::request_shutdown(SHUTDOWN_FUNC_ARGS) {
+    for(auto i=module_t::_inst->_classes_map.begin(); i!= module_t::_inst->_classes_map.end(); ++i) {
+        i->second->request_shutdown();
+    }
+    return SUCCESS;
+}
+void module_t::info(ZEND_MODULE_INFO_FUNC_ARGS) {
+
+}
+
+
 ZEND_BEGIN_ARG_INFO(function_argv, 0)
 ZEND_ARG_VARIADIC_INFO(0, param)
 ZEND_END_ARG_INFO();

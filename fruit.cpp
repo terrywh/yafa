@@ -9,16 +9,15 @@
 
 easy::value_t testFunction(easy::param_t& argv) {
     return easy::value_t("hello");
-};
+}
 
 class testClass : public easy::class_base {
 public:
-    static std::string CLASS_NAME;
     easy::value_t test(easy::param_t& argv);
 };
 
-std::string testClass::CLASS_NAME="testClass";
-easy::value_t testClass::test(easy::param_t& argv) {
+easy::value_t testClass::test(easy::param_t& param) {
+    sprop("testClass", "save", param[0]);
     return std::string("abc");
 }
 
@@ -29,19 +28,24 @@ extern "C" {
         // 加入方法
         module.add("testFunction", testFunction);
         // 加入类
-        static easy::class_t<testClass> c1;
+        static easy::class_t<testClass> c1("testClass");
         // 类成员函数
-        c1.add("test", &testClass::test);
+        c1.method("test", &testClass::test);
+        // 静态属性
+        c1.property("save", easy::value_t("abcdefg"), ZEND_ACC_PUBLIC);
         module.add(c1);
         
-        static easy::class_t<database_mysql> c2;
-        c2.add("init", database_mysql::init);
-        c2.add("get_slave", database_mysql::get_slave);
-        c2.add("get_master", database_mysql::get_master);
-        c2.add("format", &database_mysql::format);
-        c2.add("query_format", &database_mysql::query_format);
+        static easy::class_t<database_mysql> c2("wuf_database_mysql");
+        c2.method("init", database_mysql::init);
+        // c2.add("get_slave", database_mysql::get_slave);
+        c2.method("get_master", database_mysql::get_master);
+        c2.method("format", &database_mysql::format);
+        c2.property("_cache", easy::value_t::create_array(), ZEND_ACC_PRIVATE);
+        c2.property("_conf",  easy::VALUE_NULL, ZEND_ACC_PRIVATE);
+        c2.method("format_query", &database_mysql::format_query);
         module.add(c2);
         
         return module;
     }
 };
+

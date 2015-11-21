@@ -36,10 +36,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/database_mysql.o \
+	${OBJECTDIR}/easy/argument.o \
 	${OBJECTDIR}/easy/class.o \
 	${OBJECTDIR}/easy/module.o \
 	${OBJECTDIR}/easy/util.o \
-	${OBJECTDIR}/easy/value_array.o \
+	${OBJECTDIR}/easy/value.o \
 	${OBJECTDIR}/fruit.o
 
 
@@ -61,16 +62,21 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libwuf.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libphp_wuf.${CND_DLIB_EXT}
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libwuf.${CND_DLIB_EXT}: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libphp_wuf.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libwuf.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libphp_wuf.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
 ${OBJECTDIR}/database_mysql.o: database_mysql.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/../php/include/php -I/../php/include/php/Zend -I/../php/include/php/main -I/../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql.o database_mysql.cpp
+
+${OBJECTDIR}/easy/argument.o: easy/argument.cpp 
+	${MKDIR} -p ${OBJECTDIR}/easy
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/../php/include/php -I/../php/include/php/Zend -I/../php/include/php/main -I/../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/argument.o easy/argument.cpp
 
 ${OBJECTDIR}/easy/class.o: easy/class.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
@@ -87,10 +93,10 @@ ${OBJECTDIR}/easy/util.o: easy/util.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/../php/include/php -I/../php/include/php/Zend -I/../php/include/php/main -I/../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/util.o easy/util.cpp
 
-${OBJECTDIR}/easy/value_array.o: easy/value_array.cpp 
+${OBJECTDIR}/easy/value.o: easy/value.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I/../php/include/php -I/../php/include/php/Zend -I/../php/include/php/main -I/../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/value_array.o easy/value_array.cpp
+	$(COMPILE.cc) -O2 -I/../php/include/php -I/../php/include/php/Zend -I/../php/include/php/main -I/../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/value.o easy/value.cpp
 
 ${OBJECTDIR}/fruit.o: fruit.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -103,7 +109,7 @@ ${OBJECTDIR}/fruit.o: fruit.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libwuf.${CND_DLIB_EXT}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libphp_wuf.${CND_DLIB_EXT}
 
 # Subprojects
 .clean-subprojects:

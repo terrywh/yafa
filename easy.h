@@ -17,18 +17,23 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <tuple>
 
 #include "php.h"
+#include "zend_interfaces.h"
 
 #include "easy/exception.h"
 #include "easy/value.h"
-#include "easy/value_array.h"
+#include "easy/argument.h"
 #include "easy/param.h"
 #include "easy/class.h"
 #include "easy/module.h"
 
 namespace easy {
-    value_t call_method(value_t obj, const char* method, const param_t& param);
+    value_t call_method(const value_t& obj, const std::string& method, const argument_t& param);
+    value_t call_method_1(const value_t& obj, const std::string& method, const value_t& a1);
+    value_t call_method_2(const value_t& obj, const std::string& method, const value_t& a1, const value_t& a2);
+    value_t property(const value_t& obj, const std::string& name);
     value_t create_object(const char* class_name, const param_t& param);
 }
 

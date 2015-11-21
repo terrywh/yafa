@@ -10,39 +10,19 @@
 namespace easy {
     typedef value_t(*function_t)(param_t& argv);
     class module_t {
-    private:
-        static int module_startup(INIT_FUNC_ARGS) {
-            
-            for(auto i=module_t::_inst->_classes_map.begin(); i!= module_t::_inst->_classes_map.end(); ++i) {
-                i->second->bootstrap();
-            }
-            return SUCCESS;
-        };
-        static int module_shutdown(SHUTDOWN_FUNC_ARGS) {
-            return SUCCESS;
-        };
-        static int request_startup(INIT_FUNC_ARGS) {
-            return SUCCESS;
-        };
-        static int request_shutdown(SHUTDOWN_FUNC_ARGS) {
-            return SUCCESS;
-        };
-        static void info(ZEND_MODULE_INFO_FUNC_ARGS) {
-            
-        };
+    public:
+        static int module_startup(INIT_FUNC_ARGS);
+        static int module_shutdown(SHUTDOWN_FUNC_ARGS);
+        static int request_startup(INIT_FUNC_ARGS);
+        static int request_shutdown(SHUTDOWN_FUNC_ARGS);
+        static void info(ZEND_MODULE_INFO_FUNC_ARGS);
         // 模块名称
         const char* _name;
         // 模块版本
         const char* _vers;
         // 导出函数
-        
         zend_module_entry _entry = {
-            sizeof(zend_module_entry),
-            ZEND_MODULE_API_NO,
-            ZEND_DEBUG,
-            USING_ZTS,
-            NULL, // _zend_ini_entry
-            NULL, // _zend_module_dep
+            STANDARD_MODULE_HEADER,
             NULL, // name
             NULL, // _zend_function_entry
             module_t::module_startup,
@@ -51,18 +31,13 @@ namespace easy {
             module_t::request_shutdown,
             module_t::info,
             NULL, // version
-            sizeof(module_t),
-            NULL, // global pointer
-            NULL, // global_ctor
-            NULL, // global_dtor
-            NULL, // post_deactivate_func
-            STANDARD_MODULE_PROPERTIES_EX,
+            STANDARD_MODULE_PROPERTIES
         };
-    public:
         static module_t* _inst;
         module_t(const char* name, const char* version):_name(name), _vers(version) {
             _entry.name = _name;
-            // _entry.globals_ptr = this;
+            _entry.version = _vers;
+//            // _entry.globals_ptr = this;
             module_t::_inst = this;
         };
         ~module_t() {
