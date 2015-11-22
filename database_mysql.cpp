@@ -285,6 +285,8 @@ easy::value_t database_mysql::select(easy::param_t& param) {
         sql.append(" LIMIT ");
         if(limit.is_string()) {
             sql.append((std::string)limit);
+        }else if(limit.is_long()) {
+            sql.append(std::to_string((zend_long)limit));
         }else if(limit.is_array()) {
             int len = limit.length();
             for(auto i=limit.begin(); limit.has_more(i); limit.next(i)) {
