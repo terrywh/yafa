@@ -169,7 +169,7 @@ easy::value_t database_mysql::insert(easy::param_t& param) {
         sql.push_back('\'');
         easy::value_t value = i.val;
         if(value.is_array()) {
-            value = easy::call_method_1(nullptr, "json_encode", easy::value_t(i.val));
+            value = easy::call_method_2(nullptr, "json_encode", easy::value_t(i.val), easy::value_t(1<<8)); // PHP_JSON_UNESCAPED_UNICODE
         }
         sql.append((std::string)easy::call_method_1(&_mysqli, "escape_string", value));
         sql.push_back('\'');
@@ -212,7 +212,7 @@ easy::value_t database_mysql::update(easy::param_t& param) {
         sql.push_back('\'');
         easy::value_t value = i.val;
         if(value.is_array()) {
-            value = easy::call_method_1(nullptr, "json_encode", easy::value_t(i.val));
+            value = easy::call_method_2(nullptr, "json_encode", easy::value_t(i.val), easy::value_t(1<<8)); // PHP_JSON_UNESCAPED_UNICODE
         }
         sql.append((std::string)easy::call_method_1(&_mysqli, "escape_string", value));
         sql.push_back('\'');

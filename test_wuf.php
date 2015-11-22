@@ -7,11 +7,11 @@ $b = [
 	],
 ];
 
-var_dump(testFunction($b));
+// var_dump(testFunction($b));
 
-$a = new testClass();
+// $a = new testClass();
 
-var_dump($a->test($b), testClass::$save);
+// var_dump($a->test($b), testClass::$save);
 
 wuf_database_mysql::init($b);
 // $i = new mysqli("192.168.56.101", "wuhao", "", "test", 3306);
@@ -26,7 +26,7 @@ echo "error: [", isset($m->error),"] ", $m->error, "\n";
 
 echo "done.\n";
 
-echo $m->update("table", ["a"=>"b", "c"=>"d"]), "\n";
+echo $m->update("table", ["a"=>"b", "c"=>["c1"=>"xxx", "c2"=>"yyy"]]), "\n";
 echo $m->update("table", ["a"=>"b", "c"=>"d"], ["a"=>"b", "c[!]"=>"d", "e[<>]"=>[100, 200], "OR"=>["f[><]"=>[300, 400], "g[~]"=>"pre_%"]]), "\n";
 echo $m->insert("table", ["a"=>"b", "c"=>"d", "e"=>"f"]), "\n";
 

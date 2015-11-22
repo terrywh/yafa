@@ -47,6 +47,10 @@ class wuf_database_mysql {
 	 * @return msyqli_result | false
 	 */
 	public function format_query(string $format, ...);
+	/**
+	 * $data 指定要保存的数据
+	 * 注：$data 如果存在 二级 数组（类似 $data = ['a'=>['1','2','3'], 'b'=>'xxx'];）将自动使用 `json_encode` 进行序列化
+	 */
 	public function insert(string $table, array $data): bool;
 	/**
 	 * 请参考 `select`
@@ -88,6 +92,7 @@ class wuf_database_mysql {
 	 * => "LIMIT 0,10"
 	 * @example $limit = [0, 10];
 	 * => "LIMIT 0, 10"
+	 * 注意：为防止误操作 `select` 不会自动进行 json 的反序列化
 	 */
 	public function select(string $table, array|string $column, array|string $cond, array|string $group, array|string $order, array|string|integer $limit);
 	/**
