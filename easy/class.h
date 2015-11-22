@@ -79,8 +79,8 @@ namespace easy {
         std::map<const std::string, std::pair<value_t, int>>                _static_property;
         std::map<const std::string, std::pair<object_property_t, int>>      _object_property;
         // 添加属性
-        void property(const std::string& name, const value_t& init, int flags);
-        void property(const std::string& name, object_property_t v, int flags);
+        class_abstract& property(const std::string& name, const value_t& init, int flags);
+        class_abstract& property(const std::string& name, object_property_t v, int flags);
     protected:    
         void add_object_method(const std::string& name, object_method_t method);
         void add_static_method(const std::string& name, static_method_t method);
@@ -94,12 +94,14 @@ namespace easy {
             
         };
         // 添加成员函数
-        void method(const std::string& name, value_t(T::*method)(param_t& argv)) {
+        class_t<T>& method(const std::string& name, value_t(T::*method)(param_t& argv)) {
             this->add_object_method(name, static_cast<object_method_t>(method));
+            return *this;
         }
         // 添加静态函数
-        void method(const std::string& name, value_t(*method)(param_t& argv)) {
+        class_t<T>& method(const std::string& name, value_t(*method)(param_t& argv)) {
             this->add_static_method(name, static_cast<static_method_t>(method));
+            return *this;
         }
         virtual class_base* create_instance() override {
             return new T();

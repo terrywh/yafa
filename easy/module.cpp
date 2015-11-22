@@ -37,10 +37,11 @@ ZEND_BEGIN_ARG_INFO(function_argv, 0)
 ZEND_ARG_VARIADIC_INFO(0, param)
 ZEND_END_ARG_INFO();
 
-void module_t::add(const char* cname, function_t fn) {
+module_t& module_t::function(const char* cname, function_t fn) {
     zend_string* name = zend_string_init(cname, strlen(cname), 1);
     module_t::_function_map[std::string(name->val, name->len)] = fn;
-    _function_entry.push_back({"testFunction", module_t::__call, function_argv, 2, 0});
+    _function_entry.push_back({name->val, module_t::__call, function_argv, 2, 0});
+    return *this;
 }
 
 void module_t::__call(INTERNAL_FUNCTION_PARAMETERS) {

@@ -51,8 +51,9 @@ namespace easy {
             return &_entry;
         };
         template <class T>
-        void add(class_t<T>& c) { // class<T> 的实例不能被回收
+        module_t& add(class_t<T>& c) { // class<T> 的实例不能被回收
             _classes_map[c._name] = &c;
+            return *this;
         };
         
         // 函数表
@@ -63,7 +64,7 @@ namespace easy {
         // 函数处理
         static void __call(INTERNAL_FUNCTION_PARAMETERS);
 //        static zend_internal_arg_info _function_argv[];
-        void add(const char* cname, function_t fn);
+        module_t& function(const char* cname, function_t fn);
     };
     
     

@@ -27,9 +27,11 @@
     </logicalFolder>
     <itemPath>database_mysql.cpp</itemPath>
     <itemPath>database_mysql.h</itemPath>
+    <itemPath>database_mysql_where.cpp</itemPath>
+    <itemPath>database_mysql_where.h</itemPath>
     <itemPath>easy.h</itemPath>
-    <itemPath>fruit.cpp</itemPath>
-    <itemPath>test_cake.php</itemPath>
+    <itemPath>register.cpp</itemPath>
+    <itemPath>test_wuf.php</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -71,6 +73,10 @@
       </item>
       <item path="database_mysql.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="database_mysql_where.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="database_mysql_where.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="easy.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="easy/argument.cpp" ex="false" tool="1" flavor2="0">
@@ -95,9 +101,9 @@
       </item>
       <item path="easy/value.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="fruit.cpp" ex="false" tool="1" flavor2="0">
+      <item path="register.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="test_cake.php" ex="false" tool="3" flavor2="0">
+      <item path="test_wuf.php" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -141,6 +147,10 @@
       </item>
       <item path="database_mysql.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="database_mysql_where.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="database_mysql_where.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="easy.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="easy/argument.cpp" ex="false" tool="1" flavor2="0">
@@ -165,9 +175,9 @@
       </item>
       <item path="easy/value.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="fruit.cpp" ex="false" tool="1" flavor2="0">
+      <item path="register.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="test_cake.php" ex="false" tool="3" flavor2="0">
+      <item path="test_wuf.php" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

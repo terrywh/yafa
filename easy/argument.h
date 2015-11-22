@@ -27,7 +27,7 @@ namespace easy {
         inline zend_ulong length() const {
             return _args.size();
         };
-        friend value_t call_method(const value_t& obj, const std::string& method, const argument_t& param);
+        friend value_t call_method(const value_t* obj, const std::string& method, const argument_t& param);
     };
 }
 #endif /* EASY_VALUE_ARRAY_H */

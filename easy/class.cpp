@@ -117,8 +117,8 @@ void class_abstract::__set(INTERNAL_FUNCTION_PARAMETERS) {
     }
     class_store* c = class_store::get_store(getThis());
     std::string name(z_name->val, z_name->len);
-    auto p = c->_abstract->_static_property.find(name);
-    if(p != c->_abstract->_static_property.end() && p->second.second & ZEND_ACC_STATIC == 0) {
+    auto p = c->_abstract->_object_property.find(name);
+    if(p != c->_abstract->_object_property.end()) {
         zend_update_property(c->_abstract->_entry, getThis(), name.c_str(), name.length(), z_value);
     }else{
         c->_instance->__set(name, z_value);
@@ -126,14 +126,18 @@ void class_abstract::__set(INTERNAL_FUNCTION_PARAMETERS) {
 }
     
 void class_abstract::__isset(INTERNAL_FUNCTION_PARAMETERS) {
-    zend_string* name;
-    if (zend_parse_parameters(ZEND_NUM_ARGS(), "Sa", &name) == FAILURE) {
+    zend_string* z_name;
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "S", &z_name) == FAILURE) {
         zend_throw_error(NULL, "failed to __isset");
         return;
     }
     class_store* c = class_store::get_store(getThis());
-    RETURN_BOOL(c->_instance->__isset(std::string(name->val, name->len)));
-    // return_value->u1.type_info = IS_NULL;
+    std::string name(z_name->val, z_name->len);
+    // 当前对象属性
+    if(c->_abstract->_object_property.find(name) != c->_abstract->_object_property.end()) {
+        RETURN_TRUE;
+    }
+    RETURN_BOOL(c->_instance->__isset(name));
 }
     
 void class_abstract::__callStatic(INTERNAL_FUNCTION_PARAMETERS) {
@@ -249,14 +253,16 @@ void class_abstract::add_static_method(const std::string& name, value_t(*method)
     this->_static_method_map[name] = method;
 }
 
-void class_abstract::property(const std::string& name, const value_t& init, int flags) {
+class_abstract& class_abstract::property(const std::string& name, const value_t& init, int flags) {
     // 属性的地址和初始值
     this->_static_property[name] = std::make_pair(init, flags|ZEND_ACC_STATIC);
+    return *this;
 }
 
-void class_abstract::property(const std::string& name, object_property_t p, int flags) {
+class_abstract& class_abstract::property(const std::string& name, object_property_t p, int flags) {
     // 属性的地址和初始值
     this->_object_property[name] = std::make_pair(p, flags);
+    return *this;
 }
 
 }

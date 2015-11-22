@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   database_mysql.h
  * Author: wuhao
@@ -29,6 +23,12 @@ class database_mysql:public easy::class_base {
         ~database_mysql();
         easy::value_t format(easy::param_t& param);
         easy::value_t format_query(easy::param_t& param);
+        easy::value_t insert(easy::param_t& param);
+        easy::value_t remove(easy::param_t& param);
+        easy::value_t update(easy::param_t& param);
+        easy::value_t select(easy::param_t& param);
+        easy::value_t one(easy::param_t& param);
+        
         easy::value_t __call(const std::string& name, easy::param_t& param) override;
         bool __isset(const std::string& name) override;
         easy::value_t __get(const std::string& name) override;

@@ -36,12 +36,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/database_mysql.o \
+	${OBJECTDIR}/database_mysql_where.o \
 	${OBJECTDIR}/easy/argument.o \
 	${OBJECTDIR}/easy/class.o \
 	${OBJECTDIR}/easy/module.o \
 	${OBJECTDIR}/easy/util.o \
 	${OBJECTDIR}/easy/value.o \
-	${OBJECTDIR}/fruit.o
+	${OBJECTDIR}/register.o
 
 
 # C Compiler Flags
@@ -73,6 +74,11 @@ ${OBJECTDIR}/database_mysql.o: database_mysql.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql.o database_mysql.cpp
 
+${OBJECTDIR}/database_mysql_where.o: database_mysql_where.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql_where.o database_mysql_where.cpp
+
 ${OBJECTDIR}/easy/argument.o: easy/argument.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
 	${RM} "$@.d"
@@ -98,10 +104,10 @@ ${OBJECTDIR}/easy/value.o: easy/value.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/value.o easy/value.cpp
 
-${OBJECTDIR}/fruit.o: fruit.cpp 
+${OBJECTDIR}/register.o: register.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/fruit.o fruit.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/register.o register.cpp
 
 # Subprojects
 .build-subprojects:

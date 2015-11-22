@@ -29,7 +29,17 @@ namespace easy {
         }
         return std::string(Z_STRVAL(_value), Z_STRLEN(_value));
     }
-    value_t value_t::operator [](zend_ulong index) {
+    char* value_t::c_str() const {
+        if(zval_get_type(&_value) == IS_NULL) {
+            return nullptr;
+        }
+        if(zval_get_type(&_value) != IS_STRING) {
+            convert_to_string(const_cast<zval*>(&_value));
+        }
+        return Z_STRVAL(_value);
+    }
+    
+    value_t value_t::operator [](int index) {
         if(!is_array()) {
             return VALUE_NULL;
         }
@@ -47,7 +57,7 @@ namespace easy {
         }
         return zend_hash_str_find(Z_ARR(_value), key.c_str(), key.length());
     }
-    bool value_t::has(zend_ulong index) const {
+    bool value_t::has(int index) const {
         if(!is_array()) {
             return false;
         }
@@ -60,7 +70,7 @@ namespace easy {
         return zend_hash_str_exists(Z_ARR(_value), key.c_str(), key.length());
     }
     
-    void value_t::set(zend_ulong index, const value_t& val) {
+    void value_t::set(int index, const value_t& val) {
         if(!is_array()) {
             return;
         }
@@ -86,5 +96,25 @@ namespace easy {
         zend_hash_init(val, 8, nullptr, nullptr, 0);
         ZVAL_ARR(&retval._value, val);
         return val;
+    }
+    
+    value_t::iterator value_t::begin() const {
+        value_t::iterator i;
+        if(!is_array()) {
+            zend_throw_error(nullptr, "for use by Array value only");
+            i.idx = -1;
+            return i;
+        }
+        zend_hash_internal_pointer_reset_ex(Z_ARR(_value), &i.pos);
+        return i;
+    }
+    bool value_t::has_more(value_t::iterator& i) const {
+        if(i.idx == -1) return false;
+        i.val = zend_hash_get_current_data_ex(Z_ARR(_value), &i.pos);
+        zend_hash_get_current_key_ex(Z_ARR(_value), &i.key, &i.idx, &i.pos);
+        return i.val != nullptr;
+    }
+    void value_t::next(value_t::iterator& i) const {
+        zend_hash_move_forward_ex(Z_ARR(_value), &i.pos);
     }
 }

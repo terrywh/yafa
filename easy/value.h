@@ -53,6 +53,10 @@ namespace easy {
             auto zstr = zend_string_init(str.c_str(), str.length(), 0);
             ZVAL_STR(&_value, zstr);
         }
+        value_t(const zend_string* str) {
+            ZVAL_STR(&_value, const_cast<zend_string*>(str));
+            Z_ADDREF(_value);
+        }
         value_t(const bool& b) {
             // _value = (zval*)emalloc(sizeof(zval));
             ZVAL_BOOL(&_value, false);
@@ -78,6 +82,12 @@ namespace easy {
         inline bool is_object() const {
             return Z_TYPE(_value) == IS_OBJECT;
         }
+        inline bool is_true() const {
+            return Z_TYPE(_value) == IS_TRUE;
+        }
+        inline bool is_false() const {
+            return Z_TYPE(_value) == IS_FALSE;
+        }
         // 辅助
         inline bool empty() const {
             return Z_TYPE(_value) != IS_NULL || 
@@ -95,14 +105,29 @@ namespace easy {
             return &_value;
         };
         // 数组
-        value_t operator [](zend_ulong index);
+        value_t operator [](int index);
         value_t operator [](const char*);
         value_t operator [](const std::string& key);
-        bool has(zend_ulong index) const;
+        char* c_str() const;
+        bool has(int index) const;
         bool has(const std::string& key) const;
-        inline zend_ulong length() const;
-        void set(zend_ulong index, const value_t& val);
+        inline int length() const {
+            if(is_array()) {
+                return zend_hash_num_elements(Z_ARR(_value));
+            }
+            return 0ul;
+        }
+        void set(int index, const value_t& val);
         void set(const std::string& key, const value_t& val);
+        typedef struct {
+            HashPosition pos;
+            zval*        val;
+            zend_string* key;
+            zend_ulong   idx;
+        } iterator;
+        iterator begin() const;
+        bool has_more(iterator& i) const;
+        void next(iterator& i) const;
         
         value_t clone() const;
         
@@ -112,10 +137,11 @@ namespace easy {
         friend class class_base;
         friend class module_t;
         friend class argument_t;
-        friend value_t call_method(const value_t& obj, const std::string& method, const argument_t& param);
-        friend value_t call_method_1(const value_t& obj, const std::string& method, const value_t& a1);
-        friend value_t call_method_2(const value_t& obj, const std::string& method, const value_t& a1, const value_t& a2);
+        friend value_t call_method(const value_t* obj, const std::string& method, const argument_t& param);
+        friend value_t call_method_1(const value_t* obj, const std::string& method, const value_t& a1);
+        friend value_t call_method_2(const value_t* obj, const std::string& method, const value_t& a1, const value_t& a2);
         friend value_t property(const value_t& obj, const std::string& name);
+        friend value_t property_exists(const value_t& obj, const std::string& name);
     };
     static const value_t VALUE_NULL;
     static const std::string STRING_EMPTY;
