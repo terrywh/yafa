@@ -1,7 +1,7 @@
 PHP_WUF
 ====
 
-扩展补充了部分 [Yaf]() 未提供的常用功能。
+仅支持 PHP7。扩展补充了部分 [Yaf](https://github.com/laruence/yaf/tree/php7) 未提供的常用功能。
 
 MySQLi 包装
 ---
