@@ -19,6 +19,7 @@ class wuf_database_mysql {
 	 * 		["host"=>"127.0.0.1", "port"=>3306, "user"=>"root", "pass"=>"123456", "db"=>"test"]
 	 *	]
 	 * ]
+	 */
 	public static function init($config) : bool;
 	/**
 	 * 获取对应上述主库配置 $index 的数据库连接对象
