@@ -28,6 +28,16 @@ value_t call_method(const value_t* obj, const std::string& method, const argumen
     return ret;
 }
 
+value_t call_method_0(const value_t* obj, const std::string& method) {
+    value_t retval;
+    if(obj == nullptr) {
+        zend_call_method(nullptr, nullptr, nullptr, method.c_str(), method.length(), const_cast<zval*>(&retval._value), 0, nullptr, nullptr);
+    }else{
+        zend_call_method(const_cast<zval*>(&obj->_value), Z_OBJCE(obj->_value), nullptr, method.c_str(), method.length(), const_cast<zval*>(&retval._value), 0, nullptr, nullptr);
+    }
+    return retval;
+}
+
 value_t call_method_1(const value_t* obj, const std::string& method, const value_t& a1) {
     value_t retval;
     if(obj == nullptr) {

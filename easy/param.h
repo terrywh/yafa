@@ -31,7 +31,6 @@ namespace easy {
             }else if(index < size) {
                 return _params + index;
             }
-            zend_throw_error(NULL, "undefined offset \"%ld\"", index);
             return VALUE_NULL;
         };
     };

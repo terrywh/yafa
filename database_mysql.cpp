@@ -42,7 +42,7 @@ easy::value_t database_mysql::create(easy::value_t& config) {
             user = config["user"],
             pass = config["pass"],
             db   = config["db"];
-    if(host.empty() || port.empty() || user.empty() || pass.empty()) {
+    if(host.empty() || port.empty() || user.empty()) {
         zend_throw_error(NULL, "illegal mysql config #3");
         return easy::VALUE_NULL;
     }
@@ -179,12 +179,20 @@ easy::value_t database_mysql::insert(easy::param_t& param) {
         }
     }
     sql.push_back(')');
-    php_printf("SQL: [%s]\n", sql.c_str());
     return easy::call_method_1(&_mysqli, "query", sql);
 }
 
 easy::value_t database_mysql::remove(easy::param_t& param) {
-    
+    std::string table  = param[0];
+    easy::value_t data = param[1];
+    if(table.empty() || data.length() == 0) {
+        zend_throw_error(nullptr, "table name and conditions is required");
+        return easy::VALUE_NULL;
+    }
+    std::string sql = "DELETE FROM `"+table+"`";
+    database_mysql_where where(_mysqli, sql);
+    where.build(data);
+    return easy::call_method_1(&_mysqli, "query", sql);
 }
 
 easy::value_t database_mysql::update(easy::param_t& param) {
@@ -220,15 +228,133 @@ easy::value_t database_mysql::update(easy::param_t& param) {
     }else{
         zend_error(E_NOTICE, "database update without conditions");
     }
-    php_printf("SQL: [%s]\n", sql.c_str());
     return easy::call_method_1(&_mysqli, "query", sql);
 }
 
 easy::value_t database_mysql::select(easy::param_t& param) {
-    
+    std::string   table  = param[0];
+    easy::value_t column = param[1];
+    if(table.empty() || !column.is_string() && !column.is_array() || column.length() < 1) {
+        zend_throw_error(nullptr, "table name and columns is required");
+        return easy::VALUE_NULL;
+    }
+    // 以下参数可选
+    easy::value_t cond   = param[2];
+    easy::value_t group  = param[3];
+    easy::value_t order  = param[4];
+    easy::value_t limit  = param[5];
+    std::string sql = "SELECT ";
+    if(column.is_string()) {
+        sql.append((std::string)column);
+    }else if(column.is_array()) {
+        int len = column.length();
+        for(auto i=column.begin(); column.has_more(i); column.next(i)) {
+            sql.push_back('`');
+            sql.append((std::string)easy::value_t(i.val));
+            sql.push_back('`');
+            if(--len !=0) {
+                sql.push_back(',');
+            }
+        }
+    }
+    sql.append(" FROM `");
+    sql.append(table);
+    sql.push_back('`');
+    if(!cond.empty()) {
+        database_mysql_where where(_mysqli, sql);
+        where.build(cond);
+    }
+    if(!group.empty()) {
+        sql.append(" GROUP BY ");
+        if(group.is_string()) {
+            sql.append((std::string)group);
+        }else if(group.is_array()) {
+            int len = group.length();
+            for(auto i=group.begin(); group.has_more(i); group.next(i)) {
+                sql.push_back('`');
+                sql.append((std::string)easy::value_t(i.val));
+                sql.push_back('`');
+                if(--len !=0) {
+                    sql.push_back(',');
+                }
+            }
+        }
+    }
+    build_order(sql, order);
+    if(!limit.empty()) {
+        sql.append(" LIMIT ");
+        if(limit.is_string()) {
+            sql.append((std::string)limit);
+        }else if(limit.is_array()) {
+            int len = limit.length();
+            for(auto i=limit.begin(); limit.has_more(i); limit.next(i)) {
+                zend_long l = easy::value_t(i.val);
+                sql.append(std::to_string(l));
+                if(--len !=0) {
+                    sql.push_back(',');
+                }
+            }
+        }
+    }
+    return easy::call_method_1(&_mysqli, "query", sql);
+}
+
+void database_mysql::build_order(std::string& sql, easy::value_t& order) {
+    if(order.empty()) {
+        return;
+    }
+    sql.append(" ORDER BY ");
+    if(order.is_string()) {
+        sql.append((std::string)order);
+        return;
+    }else if(!order.is_array()) {
+        zend_throw_error(nullptr, "order must be array with either bool or \"ASC\"/\"DESC\" value]");
+        return;
+    }
+    int len = order.length();
+    for(auto i=order.begin(); order.has_more(i); order.next(i)) {
+        sql.push_back('`');
+        sql.append((std::string)easy::value_t(i.key));
+        sql.push_back('`');
+        sql.push_back(' ');
+        easy::value_t osc = easy::value_t(i.val);
+        if(osc.is_true()) { // bool 变量转换
+            sql.append(" ASC");
+        }else if(osc.is_false()){
+            sql.append(" DESC");
+        }else if(osc.is_string()) {// 文本直接添加
+            sql.append((std::string)osc);
+        }else{
+            zend_throw_error(nullptr, "order must be array with either bool or \"ASC\"/\"DESC\" value]");
+            return;
+        }
+        if(--len !=0) {
+            sql.push_back(',');
+        }
+    }
 }
 
 easy::value_t database_mysql::one(easy::param_t& param) {
+    std::string   table  = param[0];
+    easy::value_t cond   = param[1];
+    easy::value_t order  = param[2];
+    if(table.empty()) {
+        zend_throw_error(nullptr, "table name is required");
+        return easy::VALUE_NULL;
+    }
+    std::string sql = "SELECT * FROM `"+table+"`";
+    if(!cond.empty()) {
+        database_mysql_where where(_mysqli, sql);
+        where.build(cond);
+    }
+    build_order(sql, order);
+    sql.append(" LIMIT 1");
+    easy::value_t rs = easy::call_method_1(&_mysqli, "query", sql);
+    if(rs.is_object()) {
+        return easy::call_method_0(&rs, "fetch_assoc");
+    }else{
+        return easy::VALUE_NULL;
+    }
 }
 
 // 将其他所有调用转接到 mysqli

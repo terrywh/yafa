@@ -35,6 +35,7 @@ class database_mysql:public easy::class_base {
 
     private:
         static easy::value_t create(easy::value_t& config);
+        static void build_order(std::string& sql, easy::value_t& order);
         
 };
 

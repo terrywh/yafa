@@ -90,10 +90,10 @@ namespace easy {
         }
         // 辅助
         inline bool empty() const {
-            return Z_TYPE(_value) != IS_NULL || 
+            return Z_TYPE(_value) == IS_NULL || Z_TYPE(_value) == IS_FALSE ||
                     (Z_TYPE(_value) == IS_LONG && Z_LVAL(_value) == 0l) ||
                     (Z_TYPE(_value) == IS_STRING && Z_STRLEN(_value) == 0) ||
-                    (Z_TYPE(_value) == IS_ARRAY && zend_hash_num_elements(Z_ARR(_value)));
+                    (Z_TYPE(_value) == IS_ARRAY && zend_hash_num_elements(Z_ARR(_value)) == 0);
         }
         // 类型转换
         operator double();
@@ -115,7 +115,10 @@ namespace easy {
             if(is_array()) {
                 return zend_hash_num_elements(Z_ARR(_value));
             }
-            return 0ul;
+            if(is_string()) {
+                return Z_STRLEN(_value);
+            }
+            return 0;
         }
         void set(int index, const value_t& val);
         void set(const std::string& key, const value_t& val);
@@ -138,6 +141,7 @@ namespace easy {
         friend class module_t;
         friend class argument_t;
         friend value_t call_method(const value_t* obj, const std::string& method, const argument_t& param);
+        friend value_t call_method_0(const value_t* obj, const std::string& method);
         friend value_t call_method_1(const value_t* obj, const std::string& method, const value_t& a1);
         friend value_t call_method_2(const value_t* obj, const std::string& method, const value_t& a1, const value_t& a2);
         friend value_t property(const value_t& obj, const std::string& name);

@@ -29,11 +29,11 @@ extern "C" {
 //        // 加入方
             module.function("testFunction", testFunction);
 //        // 加入类
-//        static easy::class_t<testClass> c1("testClass");
-//        // 类成员函数
-//        c1.method("test", &testClass::test)
-//            .property("save", easy::value_t("abcdefg"), ZEND_ACC_PUBLIC);  // 静态属性
-//        module.function(c1);
+        static easy::class_t<testClass> c1("testClass");
+        // 类成员函数
+        c1.method("test", &testClass::test)
+            .property("save", easy::value_t("abcdefg"), ZEND_ACC_PUBLIC);  // 静态属性
+        module.add(c1);
         
         static easy::class_t<database_mysql> c2("wuf_database_mysql");
         c2

@@ -31,6 +31,7 @@
 
 namespace easy {
     value_t call_method(const value_t* obj, const std::string& method, const argument_t& param);
+    value_t call_method_0(const value_t* obj, const std::string& method);
     value_t call_method_1(const value_t* obj, const std::string& method, const value_t& a1);
     value_t call_method_2(const value_t* obj, const std::string& method, const value_t& a1, const value_t& a2);
     value_t property(const value_t& obj, const std::string& name);

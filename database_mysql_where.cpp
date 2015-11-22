@@ -25,7 +25,7 @@ void database_mysql_where::build(easy::value_t& c) {
         _sql.append((std::string)c);
         return;
     }else if(!c.is_array()) {
-        zend_throw_error(nullptr, "only string and array conditions is supported");
+        zend_throw_error(nullptr, "conditions must be string or array");
         return;
     }
     unsigned long len = c.length();
