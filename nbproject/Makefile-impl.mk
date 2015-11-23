@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=yaf_aide
+PROJECTNAME=yafa
 
 # Active Configuration
 DEFAULTCONF=Debug

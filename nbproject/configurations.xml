@@ -66,7 +66,7 @@
           </preprocessorList>
         </ccTool>
         <linkerTool>
-          <output>${CND_DISTDIR}/../../php/ext/yaf_aide.${CND_DLIB_EXT}</output>
+          <output>${CND_DISTDIR}/../../php/ext/yafa.${CND_DLIB_EXT}</output>
         </linkerTool>
       </compileType>
       <item path="database_mysql.cpp" ex="false" tool="1" flavor2="0">
