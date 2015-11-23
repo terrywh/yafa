@@ -25,7 +25,7 @@ easy::value_t testClass::test(easy::param_t& param) {
 
 extern "C" {
     EASY_EXPORT zend_module_entry* get_module() {
-        static easy::module_t module("yaf_aide", "0.1.0");
+        static easy::module_t module("yafa", "0.1.0");
 //        // 加入函数
 //        module.function("testFunction", testFunction);
 //        // 加入类
