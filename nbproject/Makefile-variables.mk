@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/../../php/ext
-CND_ARTIFACT_NAME_Debug=php_wuf.so
-CND_ARTIFACT_PATH_Debug=dist/../../php/ext/php_wuf.so
+CND_ARTIFACT_NAME_Debug=yaf_aide.so
+CND_ARTIFACT_PATH_Debug=dist/../../php/ext/yaf_aide.so
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=libphpwuf.so.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/libphpwuf.so.tar
+CND_PACKAGE_NAME_Debug=libyafaide.so.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/libyafaide.so.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=libphp_wuf.so
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/libphp_wuf.so
+CND_ARTIFACT_NAME_Release=libyaf_aide.so
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/libyaf_aide.so
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=libphpwuf.so.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/libphpwuf.so.tar
+CND_PACKAGE_NAME_Release=libyafaide.so.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/libyafaide.so.tar
 #
 # include compiler specific variables
 #

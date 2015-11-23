@@ -25,7 +25,7 @@ easy::value_t testClass::test(easy::param_t& param) {
 
 extern "C" {
     EASY_EXPORT zend_module_entry* get_module() {
-        static easy::module_t module("wuf", "0.1.0");
+        static easy::module_t module("yaf_aide", "0.1.0");
 //        // 加入函数
 //        module.function("testFunction", testFunction);
 //        // 加入类
@@ -35,7 +35,7 @@ extern "C" {
 //            .property("save", easy::value_t("abcdefg"), ZEND_ACC_PUBLIC);  // 静态属性
 //        module.add(c1);
         
-        static easy::class_t<database_mysql> c2("wuf_database_mysql");
+        static easy::class_t<database_mysql> c2(CLASS_DATABASE_MYSQL_NAME);
         c2
             .method("init", database_mysql::init)
             .method("get_slave", database_mysql::get_slave)

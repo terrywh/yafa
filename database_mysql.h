@@ -8,6 +8,8 @@
 #ifndef DATABASE_MYSQL_H
 #define DATABASE_MYSQL_H
 
+#define CLASS_DATABASE_MYSQL_NAME "yafa_database_mysql"
+
 class database_mysql:public easy::class_base {
     private:
         easy::value_t        _mysqli;

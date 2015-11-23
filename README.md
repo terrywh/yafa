@@ -1,4 +1,4 @@
-PHP_WUF
+YAF_AIDE
 ====
 
 仅支持 PHP7。扩展补充了部分 [Yaf](https://github.com/laruence/yaf/tree/php7) 未提供的常用功能。
@@ -6,7 +6,7 @@ PHP_WUF
 MySQLi 包装
 ---
 ``` php
-class wuf_database_mysql {
+class yafa_database_mysql {
 	/**
 	 * 数据库配置初始化（建议在 Yaf_Bootstrap_Abstract 实现类中调用）
 	 * $config 包含数据库配置，形式如下：

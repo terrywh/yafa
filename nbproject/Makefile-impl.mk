@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=php_wuf
+PROJECTNAME=yaf_aide
 
 # Active Configuration
 DEFAULTCONF=Debug

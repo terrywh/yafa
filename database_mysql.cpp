@@ -8,7 +8,6 @@
 #include "database_mysql.h"
 #include "database_mysql_where.h"
 
-// std::string database_mysql::CLASS_NAME = "wue_database_mysql";
 std::string database_mysql::MASTER     = "master";
 std::string database_mysql::SLAVE      = "slave";
 
@@ -32,7 +31,7 @@ easy::value_t database_mysql::init(easy::param_t& param) {
         zend_throw_error(NULL, "illegal mysql config #1");
         return false;
     }
-    sprop("wuf_database_mysql", "_conf", conf);
+    sprop(CLASS_DATABASE_MYSQL_NAME, "_conf", conf);
     return true;
 }
 
@@ -47,7 +46,9 @@ easy::value_t database_mysql::create(easy::value_t& config) {
         return easy::VALUE_NULL;
     }
     std::string s;
-    s.append("new wuf_database_mysql(new mysqli(\"")
+    s.append("new ")
+        .append(CLASS_DATABASE_MYSQL_NAME)
+        .append("(new mysqli(\"")
         .append(host)
         .append("\",\"")
         .append(user)
@@ -63,7 +64,7 @@ easy::value_t database_mysql::create(easy::value_t& config) {
     s.append(port)
         .append("))");
     zval retval;
-    zend_eval_string(const_cast<char*>(s.c_str()), &retval, const_cast<char*>("wuf_database_mysql::create"));
+    zend_eval_string(const_cast<char*>(s.c_str()), &retval, const_cast<char*>("yafa_database_mysql::create"));
     return &retval;
 }
 
@@ -74,10 +75,10 @@ easy::value_t database_mysql::get_master(easy::param_t& param) {
         idx = param[0];
     }
     key.append(std::to_string(idx));
-    easy::value_t cache = sprop("wuf_database_mysql", "_cache");
+    easy::value_t cache = sprop(CLASS_DATABASE_MYSQL_NAME, "_cache");
     easy::value_t db = cache[key];
     if(!db.is_object()) {
-        easy::value_t conf = sprop("wuf_database_mysql", "_conf");
+        easy::value_t conf = sprop(CLASS_DATABASE_MYSQL_NAME, "_conf");
         conf = conf["master"][idx];
         if(!conf.is_array()) {
             zend_throw_error(NULL, "illegal mysql config #2");
@@ -95,10 +96,10 @@ easy::value_t database_mysql::get_slave(easy::param_t& param) {
         idx = param[0];
     }
     key.append(std::to_string(idx));
-    easy::value_t cache = sprop("wuf_database_mysql", "_cache");
+    easy::value_t cache = sprop(CLASS_DATABASE_MYSQL_NAME, "_cache");
     easy::value_t db = cache[key];
     if(!db.is_object()) {
-        easy::value_t conf = sprop("wuf_database_mysql", "_conf");
+        easy::value_t conf = sprop(CLASS_DATABASE_MYSQL_NAME, "_conf");
         conf = conf["slave"][idx];
         if(!conf.is_array()) {
             zend_throw_error(NULL, "illegal mysql config #2");
