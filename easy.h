@@ -19,8 +19,8 @@
 #include <iostream>
 #include <tuple>
 
-#include "php.h"
-#include "zend_interfaces.h"
+#include "main/php.h"
+#include "Zend/zend_interfaces.h"
 
 #include "easy/exception.h"
 #include "easy/value.h"

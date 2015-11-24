@@ -1,128 +1,38 @@
-#
-#  There exist several targets which are by default empty and which can be 
-#  used for execution of your targets. These targets are usually executed 
-#  before and after some main targets. They are: 
-#
-#     .build-pre:              called before 'build' target
-#     .build-post:             called after 'build' target
-#     .clean-pre:              called before 'clean' target
-#     .clean-post:             called after 'clean' target
-#     .clobber-pre:            called before 'clobber' target
-#     .clobber-post:           called after 'clobber' target
-#     .all-pre:                called before 'all' target
-#     .all-post:               called after 'all' target
-#     .help-pre:               called before 'help' target
-#     .help-post:              called after 'help' target
-#
-#  Targets beginning with '.' are not intended to be called on their own.
-#
-#  Main targets can be executed directly, and they are:
-#  
-#     build                    build a specific configuration
-#     clean                    remove built files from a configuration
-#     clobber                  remove all built files
-#     all                      build all configurations
-#     help                     print help mesage
-#  
-#  Targets .build-impl, .clean-impl, .clobber-impl, .all-impl, and
-#  .help-impl are implemented in nbproject/makefile-impl.mk.
-#
-#  Available make variables:
-#
-#     CND_BASEDIR                base directory for relative paths
-#     CND_DISTDIR                default top distribution directory (build artifacts)
-#     CND_BUILDDIR               default top build directory (object files, ...)
-#     CONF                       name of current configuration
-#     CND_PLATFORM_${CONF}       platform name (current configuration)
-#     CND_ARTIFACT_DIR_${CONF}   directory of build artifact (current configuration)
-#     CND_ARTIFACT_NAME_${CONF}  name of build artifact (current configuration)
-#     CND_ARTIFACT_PATH_${CONF}  path to build artifact (current configuration)
-#     CND_PACKAGE_DIR_${CONF}    directory of package (current configuration)
-#     CND_PACKAGE_NAME_${CONF}   name of package (current configuration)
-#     CND_PACKAGE_PATH_${CONF}   path to package (current configuration)
-#
-# NOCDDL
+PHP_CONFIG?=/data/server/php/bin/php-config
+PHP_INCLUES=$(shell $(PHP_CONFIG) --includes)
+PHP_EXTENSION_DIR=$(shell $(PHP_CONFIG) --extension-dir)
+CONF?=Release
 
+EASY_OBJECTS=easy/util.o easy/value.o easy/argument.o easy/class.o easy/module.o
+YAFA_OBJECTS=database_mysql.o database_mysql_where.o extension.o
+TARGET=yafa.so
 
-# Environment 
-MKDIR=mkdir
-CP=cp
-CCADMIN=CCadmin
+CXXFLAGS+= -std=c++11 -m64 -fPIC
 
+ifeq ($(CONF),'Debug')
+    CXXFLAGS+= -O0 -g
+endif
+ifeq ($(CONF),'Release')
+    CXXFLAGS+= -O2
+endif
 
-# build
-build: .build-post
+.PHONY:all clean install test
+all:$(TARGET) install
+	@echo done.
+test:
+	@echo $(PHP_INCLUES)
+	@echo $(PHP_EXTENSION_DIR)
+clean:
+	rm -f $(EASY_OBJECTS)
+	rm -f $(YAFA_OBJECTS)
+	rm -f $(TARGET)
+$(EASY_OBJECTS):%.o:%.cpp
+	g++ $(CXXFLAGS) $(PHP_INCLUES) -c $^ -o $@
+$(YAFA_OBJECTS):%.o:%.cpp
+	g++ $(CXXFLAGS) $(PHP_INCLUES) -c $^ -o $@
+$(TARGET):$(EASY_OBJECTS) $(YAFA_OBJECTS)
+	g++ $(CXXFLAGS) -fPIC -shared $^ -o $@
+install:$(TARGET)
+	cp $(TARGET) $(PHP_EXTENSION_DIR)/
+	@echo please add $(TARGET) to php.ini.
 
-.build-pre:
-# Add your pre 'build' code here...
-
-.build-post: .build-impl
-# Add your post 'build' code here...
-
-
-# clean
-clean: .clean-post
-
-.clean-pre:
-# Add your pre 'clean' code here...
-
-.clean-post: .clean-impl
-# Add your post 'clean' code here...
-
-
-# clobber
-clobber: .clobber-post
-
-.clobber-pre:
-# Add your pre 'clobber' code here...
-
-.clobber-post: .clobber-impl
-# Add your post 'clobber' code here...
-
-
-# all
-all: .all-post
-
-.all-pre:
-# Add your pre 'all' code here...
-
-.all-post: .all-impl
-# Add your post 'all' code here...
-
-
-# build tests
-build-tests: .build-tests-post
-
-.build-tests-pre:
-# Add your pre 'build-tests' code here...
-
-.build-tests-post: .build-tests-impl
-# Add your post 'build-tests' code here...
-
-
-# run tests
-test: .test-post
-
-.test-pre: build-tests
-# Add your pre 'test' code here...
-
-.test-post: .test-impl
-# Add your post 'test' code here...
-
-
-# help
-help: .help-post
-
-.help-pre:
-# Add your pre 'help' code here...
-
-.help-post: .help-impl
-# Add your post 'help' code here...
-
-
-
-# include project implementation makefile
-include nbproject/Makefile-impl.mk
-
-# include project make variables
-include nbproject/Makefile-variables.mk

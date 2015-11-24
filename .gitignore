@@ -1,2 +1,4 @@
 /build
 /nbproject/private
+*.o
+/nbproject/*.mk

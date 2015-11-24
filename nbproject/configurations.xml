@@ -30,7 +30,7 @@
     <itemPath>database_mysql_where.cpp</itemPath>
     <itemPath>database_mysql_where.h</itemPath>
     <itemPath>easy.h</itemPath>
-    <itemPath>register.cpp</itemPath>
+    <itemPath>extension.cpp</itemPath>
     <itemPath>test_yaf_aide.php</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -101,7 +101,7 @@
       </item>
       <item path="easy/value.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="register.cpp" ex="false" tool="1" flavor2="0">
+      <item path="extension.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="test_yaf_aide.php" ex="false" tool="3" flavor2="0">
       </item>
@@ -175,7 +175,7 @@
       </item>
       <item path="easy/value.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="register.cpp" ex="false" tool="1" flavor2="0">
+      <item path="extension.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="test_yaf_aide.php" ex="false" tool="3" flavor2="0">
       </item>
