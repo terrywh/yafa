@@ -13,11 +13,11 @@ $b = [
 
 // var_dump($a->test($b), testClass::$save);
 
-wuf_database_mysql::init($b);
+yafa_database_mysql::init($b);
 // $i = new mysqli("192.168.56.101", "wuhao", "", "test", 3306);
-$m = wuf_database_mysql::get_master();
+$m = yafa_database_mysql::get_master();
 
-echo "format:", $m->format("SELECT * FROM `user` LIMIT ?", 2), "\n";
+echo "format: ", $m->format("SELECT * FROM `user` LIMIT ?", 2), "\n";
 // echo "escape:", $i->escape_string("xx'xx"), "\n";
 
 var_dump( $m->format_query("SELECT * FROM `user`"), $m->query("select * from `aaauser`") );

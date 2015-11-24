@@ -63,51 +63,51 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/../../php/ext/yafa.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk /data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.${CND_DLIB_EXT}
 
-${CND_DISTDIR}/../../php/ext/yafa.${CND_DLIB_EXT}: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/../../php/ext
-	${LINK.cc} -o ${CND_DISTDIR}/../../php/ext/yafa.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+/data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.${CND_DLIB_EXT}: ${OBJECTFILES}
+	${MKDIR} -p /data/server/php/lib/php/extensions/no-debug-non-zts-20151012
+	${LINK.cc} -o /data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
 ${OBJECTDIR}/database_mysql.o: database_mysql.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql.o database_mysql.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql.o database_mysql.cpp
 
 ${OBJECTDIR}/database_mysql_where.o: database_mysql_where.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql_where.o database_mysql_where.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database_mysql_where.o database_mysql_where.cpp
 
 ${OBJECTDIR}/easy/argument.o: easy/argument.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/argument.o easy/argument.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/argument.o easy/argument.cpp
 
 ${OBJECTDIR}/easy/class.o: easy/class.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/class.o easy/class.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/class.o easy/class.cpp
 
 ${OBJECTDIR}/easy/module.o: easy/module.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/module.o easy/module.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/module.o easy/module.cpp
 
 ${OBJECTDIR}/easy/util.o: easy/util.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/util.o easy/util.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/util.o easy/util.cpp
 
 ${OBJECTDIR}/easy/value.o: easy/value.cpp 
 	${MKDIR} -p ${OBJECTDIR}/easy
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/value.o easy/value.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/easy/value.o easy/value.cpp
 
 ${OBJECTDIR}/register.o: register.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG=1 -I../php/include/php -I../php/include/php/Zend -I../php/include/php/main -I../php/include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/register.o register.cpp
+	$(COMPILE.cc) -g -DDEBUG=1 -I../php_include/php -I../php_include/php/Zend -I../php_include/php/main -I../php_include/php/TSRM -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/register.o register.cpp
 
 # Subprojects
 .build-subprojects:
@@ -115,7 +115,7 @@ ${OBJECTDIR}/register.o: register.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/../../php/ext/yafa.${CND_DLIB_EXT}
+	${RM} /data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.${CND_DLIB_EXT}
 
 # Subprojects
 .clean-subprojects:

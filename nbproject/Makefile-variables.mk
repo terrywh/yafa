@@ -8,9 +8,9 @@ CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
-CND_ARTIFACT_DIR_Debug=dist/../../php/ext
+CND_ARTIFACT_DIR_Debug=/data/server/php/lib/php/extensions/no-debug-non-zts-20151012
 CND_ARTIFACT_NAME_Debug=yafa.so
-CND_ARTIFACT_PATH_Debug=dist/../../php/ext/yafa.so
+CND_ARTIFACT_PATH_Debug=/data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.so
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
 CND_PACKAGE_NAME_Debug=libyafa.so.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/libyafa.so.tar

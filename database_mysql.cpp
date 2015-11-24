@@ -128,9 +128,14 @@ easy::value_t database_mysql::format(easy::param_t& param) {
                 zend_throw_error(nullptr, "format arguments is not enough");
                 return after;
             }
-            after.push_back('\'');
-            after.append((std::string)easy::call_method_1(&_mysqli, "escape_string", param[m]));
-            after.push_back('\'');
+            
+            if(param[m].is_long()) {
+                after.append(std::to_string(Z_LVAL_P(param[m].get())));
+            }else{
+                after.push_back('\'');
+                after.append((std::string)easy::call_method_1(&_mysqli, "escape_string", param[m]));
+                after.push_back('\'');
+            }
             ++m;
         }
         ++i;

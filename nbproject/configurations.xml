@@ -46,27 +46,27 @@
           <architecture>2</architecture>
           <standard>10</standard>
           <incDir>
-            <pElem>../php/include/php</pElem>
-            <pElem>../php/include/php/Zend</pElem>
-            <pElem>../php/include/php/main</pElem>
-            <pElem>../php/include/php/TSRM</pElem>
+            <pElem>../php_include/php</pElem>
+            <pElem>../php_include/php/Zend</pElem>
+            <pElem>../php_include/php/main</pElem>
+            <pElem>../php_include/php/TSRM</pElem>
           </incDir>
         </cTool>
         <ccTool>
           <architecture>2</architecture>
           <standard>8</standard>
           <incDir>
-            <pElem>../php/include/php</pElem>
-            <pElem>../php/include/php/Zend</pElem>
-            <pElem>../php/include/php/main</pElem>
-            <pElem>../php/include/php/TSRM</pElem>
+            <pElem>../php_include/php</pElem>
+            <pElem>../php_include/php/Zend</pElem>
+            <pElem>../php_include/php/main</pElem>
+            <pElem>../php_include/php/TSRM</pElem>
           </incDir>
           <preprocessorList>
             <Elem>DEBUG=1</Elem>
           </preprocessorList>
         </ccTool>
         <linkerTool>
-          <output>${CND_DISTDIR}/../../php/ext/yafa.${CND_DLIB_EXT}</output>
+          <output>/data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.${CND_DLIB_EXT}</output>
         </linkerTool>
       </compileType>
       <item path="database_mysql.cpp" ex="false" tool="1" flavor2="0">

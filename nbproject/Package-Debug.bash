@@ -13,7 +13,7 @@ CND_BUILDDIR=build
 CND_DLIB_EXT=so
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/../../php/ext/yafa.${CND_DLIB_EXT}
+OUTPUT_PATH=/data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.${CND_DLIB_EXT}
 OUTPUT_BASENAME=yafa.${CND_DLIB_EXT}
 PACKAGE_TOP_DIR=libyafa.so/
 
