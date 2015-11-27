@@ -31,7 +31,7 @@ $(EASY_OBJECTS):%.o:%.cpp
 $(YAFA_OBJECTS):%.o:%.cpp
 	g++ $(CXXFLAGS) $(PHP_INCLUES) -c $^ -o $@
 $(TARGET):$(EASY_OBJECTS) $(YAFA_OBJECTS)
-	g++ $(CXXFLAGS) -fPIC -shared $^ -o $@
+	g++ $(CXXFLAGS) -shared $^ -static-libstdc++ -o $@
 install:$(TARGET)
 	cp $(TARGET) $(PHP_EXTENSION_DIR)/
 	@echo please add $(TARGET) to php.ini.

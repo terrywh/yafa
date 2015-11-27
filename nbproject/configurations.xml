@@ -29,6 +29,8 @@
     <itemPath>database_mysql.h</itemPath>
     <itemPath>database_mysql_where.cpp</itemPath>
     <itemPath>database_mysql_where.h</itemPath>
+    <itemPath>database_redis.cpp</itemPath>
+    <itemPath>database_redis.h</itemPath>
     <itemPath>easy.h</itemPath>
     <itemPath>extension.cpp</itemPath>
     <itemPath>test_yaf_aide.php</itemPath>
@@ -46,20 +48,20 @@
           <architecture>2</architecture>
           <standard>10</standard>
           <incDir>
-            <pElem>../php_include/php</pElem>
-            <pElem>../php_include/php/Zend</pElem>
-            <pElem>../php_include/php/main</pElem>
-            <pElem>../php_include/php/TSRM</pElem>
+            <pElem>../php_include</pElem>
+            <pElem>../php_include/Zend</pElem>
+            <pElem>../php_include/main</pElem>
+            <pElem>../php_include/TSRM</pElem>
           </incDir>
         </cTool>
         <ccTool>
           <architecture>2</architecture>
           <standard>8</standard>
           <incDir>
-            <pElem>../php_include/php</pElem>
-            <pElem>../php_include/php/Zend</pElem>
-            <pElem>../php_include/php/main</pElem>
-            <pElem>../php_include/php/TSRM</pElem>
+            <pElem>../php_include</pElem>
+            <pElem>../php_include/Zend</pElem>
+            <pElem>../php_include/main</pElem>
+            <pElem>../php_include/TSRM</pElem>
           </incDir>
           <preprocessorList>
             <Elem>DEBUG=1</Elem>
@@ -76,6 +78,10 @@
       <item path="database_mysql_where.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="database_mysql_where.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="database_redis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="database_redis.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="easy.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -150,6 +156,10 @@
       <item path="database_mysql_where.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="database_mysql_where.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="database_redis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="database_redis.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="easy.h" ex="false" tool="3" flavor2="0">
       </item>

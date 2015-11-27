@@ -105,3 +105,31 @@ class yafa_database_mysql {
 	 */
 }
 ```
+
+[PhpRedis](https://github.com/phpredis/phpredis) 包装 
+---
+``` php
+class yafa_database_redis {
+	/**
+	 * $config 包含数据库配置，形式如下：
+	 * [
+	 *	"master"=>[
+	 *		["host"=>"127.0.0.1", "port"=>3306, "auth"="passwd", "prefix"=>"pre_"],
+	 *		["host"=>"127.0.0.1", "port"=>3306, "auth"="passwd", "prefix"=>"pre_"],
+	 *	],
+	 *	"slave"=>[
+	 * 		["host"=>"127.0.0.1", "port"=>3306, "auth"="passwd", "prefix"=>"pre_"],
+	 *	]
+	 * ]
+	 * 当配置中存在 "auth" 将会在实例化 phpredis 对象时自动调用 auth 方法
+	 */
+	public static function init($config) : bool;
+	public static function get_master($index = 0) : yafa_database_redis;
+	public static function get_slave($index = 0)  : yafa_database_redis;
+
+	public function __construct(redis $redis);
+	public function auth() { throw "please use 'auth' key in config"; }
+	public function select($index);
+	// 其他方法代理到 PhpRedis 实例，并对第一个参数添加 prefix 前缀
+}
+```
