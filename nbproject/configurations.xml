@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f1" displayName="easy" projectFiles="true">
-      <itemPath>easy/argument.cpp</itemPath>
-      <itemPath>easy/argument.h</itemPath>
-      <itemPath>easy/class.cpp</itemPath>
-      <itemPath>easy/class.h</itemPath>
-      <itemPath>easy/exception.h</itemPath>
-      <itemPath>easy/module.cpp</itemPath>
-      <itemPath>easy/module.h</itemPath>
-      <itemPath>easy/param.h</itemPath>
-      <itemPath>easy/util.cpp</itemPath>
-      <itemPath>easy/value.cpp</itemPath>
-      <itemPath>easy/value.h</itemPath>
+    <logicalFolder name="f2" displayName="php" projectFiles="true" kind="ROOT">
+      <itemPath>php/class.cpp</itemPath>
+      <itemPath>php/class.h</itemPath>
+      <itemPath>php/invoke.cpp</itemPath>
+      <itemPath>php/invoke.h</itemPath>
+      <itemPath>php/module.cpp</itemPath>
+      <itemPath>php/module.h</itemPath>
+      <itemPath>php/parameter.cpp</itemPath>
+      <itemPath>php/parameter.h</itemPath>
+      <itemPath>php/property.cpp</itemPath>
+      <itemPath>php/property.h</itemPath>
+      <itemPath>php/value.cpp</itemPath>
+      <itemPath>php/value.h</itemPath>
+      <itemPath>php/value_iterator.cpp</itemPath>
+      <itemPath>php/value_iterator.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="测试文件"
@@ -25,15 +28,14 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>core.h</itemPath>
     <itemPath>database_mysql.cpp</itemPath>
     <itemPath>database_mysql.h</itemPath>
     <itemPath>database_mysql_where.cpp</itemPath>
     <itemPath>database_mysql_where.h</itemPath>
     <itemPath>database_redis.cpp</itemPath>
     <itemPath>database_redis.h</itemPath>
-    <itemPath>easy.h</itemPath>
     <itemPath>extension.cpp</itemPath>
-    <itemPath>test_yaf_aide.php</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -71,6 +73,8 @@
           <output>/data/server/php/lib/php/extensions/no-debug-non-zts-20151012/yafa.${CND_DLIB_EXT}</output>
         </linkerTool>
       </compileType>
+      <item path="core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="database_mysql.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="database_mysql.h" ex="false" tool="3" flavor2="0">
@@ -83,33 +87,35 @@
       </item>
       <item path="database_redis.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="easy.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/argument.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/argument.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/class.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/class.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/exception.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/module.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/module.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/param.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/util.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/value.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/value.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="extension.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="test_yaf_aide.php" ex="false" tool="3" flavor2="0">
+      <item path="php/class.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/class.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/invoke.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/invoke.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/module.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/module.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/parameter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/parameter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/property.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/property.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/value.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/value.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/value_iterator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/value_iterator.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -124,10 +130,10 @@
           <architecture>2</architecture>
           <standard>10</standard>
           <incDir>
-            <pElem>/../php/include/php</pElem>
-            <pElem>/../php/include/php/Zend</pElem>
-            <pElem>/../php/include/php/main</pElem>
-            <pElem>/../php/include/php/TSRM</pElem>
+            <pElem>../php_include</pElem>
+            <pElem>../php_include/Zend</pElem>
+            <pElem>../php_include/main</pElem>
+            <pElem>../php_include/TSRM</pElem>
           </incDir>
         </cTool>
         <ccTool>
@@ -135,12 +141,11 @@
           <architecture>2</architecture>
           <standard>8</standard>
           <incDir>
-            <pElem>/../php/include/php</pElem>
-            <pElem>/../php/include/php/Zend</pElem>
-            <pElem>/../php/include/php/main</pElem>
-            <pElem>/../php/include/php/TSRM</pElem>
+            <pElem>../php_include</pElem>
+            <pElem>../php_include/Zend</pElem>
+            <pElem>../php_include/main</pElem>
+            <pElem>../php_include/TSRM</pElem>
           </incDir>
-          <commandLine>-std=c++11</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -149,6 +154,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="database_mysql.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="database_mysql.h" ex="false" tool="3" flavor2="0">
@@ -161,33 +168,35 @@
       </item>
       <item path="database_redis.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="easy.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/argument.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/argument.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/class.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/class.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/exception.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/module.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/module.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/param.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="easy/util.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/value.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="easy/value.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="extension.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="test_yaf_aide.php" ex="false" tool="3" flavor2="0">
+      <item path="php/class.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/class.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/invoke.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/invoke.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/module.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/module.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/parameter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/parameter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/property.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/property.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/value.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/value.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="php/value_iterator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="php/value_iterator.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

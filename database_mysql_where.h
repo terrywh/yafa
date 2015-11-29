@@ -16,14 +16,14 @@
 
 class database_mysql_where {
 public:
-    database_mysql_where(const easy::value_t& mysqli, std::string& sql);
+    database_mysql_where(php::value& mysqli, std::string& sql);
     virtual ~database_mysql_where();
     
-    void build(easy::value_t& c);
+    void build(php::value& c);
 private:
-    void append_item(const std::string& key, easy::value_t& val);
-    void append_val(const easy::value_t& val);
-    const easy::value_t& _mysqli;
+    void append_item(const std::string& key, php::value& val);
+    void append_val(php::value& val);
+    php::value& _mysqli;
     std::string& _sql;
 };
 

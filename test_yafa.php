@@ -7,11 +7,13 @@ $b = [
 	],
 ];
 
-// var_dump(testFunction($b));
+// var_dump("testFunction:", testFunction($b));
 
 // $a = new testClass();
-
-// var_dump($a->test($b), testClass::$save);
+// echo "test -----------------\n";
+// var_dump($a->test($b));
+// var_dump($a->prop1, $a->prop2,
+// 	testClass::$save);
 
 yafa_database_mysql::init($b);
 // $i = new mysqli("192.168.56.101", "wuhao", "", "test", 3306);
@@ -20,10 +22,10 @@ $m = yafa_database_mysql::get_master();
 echo "format: ", $m->format("SELECT * FROM `user` LIMIT ?", 2), "\n";
 // echo "escape:", $i->escape_string("xx'xx"), "\n";
 
-var_dump( $m->format_query("SELECT * FROM `user`"), $m->query("select * from `aaauser`") );
+var_dump( $m->format_query("SELECT * FROM `user` WHERE `a`=?", "abc") );
+var_dump( $m->query("select * from `aaauser`") );
 
-echo "error: [", isset($m->error),"] ", $m->error, "\n";
-
+echo "error: [", isset($m->error),"] ", var_dump($m->error);
 echo "done.\n";
 
 echo $m->update("table", ["a"=>"b", "c"=>["c1"=>"xxx", "c2"=>"yyy"]]), "\n";
