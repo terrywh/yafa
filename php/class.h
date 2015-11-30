@@ -21,8 +21,9 @@ namespace php {
         virtual value __get(const std::string& name);
         virtual bool __isset(const std::string& name);
         virtual void __set(const std::string& name, const value& value);
-    private:
-        zval self;
+        
+    protected:
+        zval   self;
         friend class class_wrap;
         friend class property;
     };

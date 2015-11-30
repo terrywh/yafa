@@ -16,6 +16,7 @@
 
 namespace php {
     class property;
+    class parameter;
     class value {
     public:
         value();
@@ -48,21 +49,24 @@ namespace php {
         value(const long& l);
         value(const int& i);
         value(const bool& b);
+        value(const double& d);
         // ---------------------------------------------------------------------
         // 赋值
         value& operator=(const value&);
         value& operator=(const char* str);
         value& operator=(const std::string& str);
         value& operator=(const long& l);
+        value& operator=(const long long& l);
         value& operator=(const bool& b);
         value& operator=(const zval* v);
+        value& operator=(const double& d);
         void update_parent();
         // ---------------------------------------------------------------------
         // 数组
-        value operator[](zend_ulong index);
+        value operator[](int index);
         value operator[](const char* key);
         value operator[](const std::string& key);
-        bool __isset(zend_ulong idx) const;
+        bool __isset(int idx) const;
         bool __isset(const std::string& key) const;
         size_t length() const;
         
@@ -73,6 +77,9 @@ namespace php {
         // 转换
         operator std::string();
         operator zend_long();
+        inline zval* intern() {
+            return &val;
+        }
     protected:
         // 以下用于层次结构
         std::string  key_str;
@@ -90,10 +97,13 @@ namespace php {
         friend class class_wrap;
         friend class module;
         friend class property;
+        friend class parameter;
+        
         friend value call_method(value* obj, const std::string& method, const std::vector<zval>& params);
         friend value call_method_0(value* obj, const std::string& method);
         friend value call_method_1(value* obj, const std::string& method, const value& a1);
         friend value call_method_2(value* obj, const std::string& method, const value& a1, const value& a2);
+        // friend value create_object(zend_class_entry* ce);
     };
     
     

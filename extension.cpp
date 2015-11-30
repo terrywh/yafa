@@ -6,35 +6,12 @@
 
 #include "core.h"
 #include "database_mysql.h"
+#include "database_redis.h"
+#include "database_ssdb.h"
 
-php::value testFunction(const php::parameter& argv) {
-    // return php::call_method_1(nullptr, "json_encode", std::string("abc"));
-    php::value v("std");
-    return v;
-}
-
-class testClass : public php::class_base {
-public:
-    static std::string class_name;
-    static zend_class_entry* class_entry;
-    php::value test(const php::parameter& argv);
-};
-
-php::value testClass::test(const php::parameter& param) {
-    php::property prop(this);
-    // prop.sset("save", "world");
-    php::value v0 = prop.sget("save");
-    
-    v0["key1"] = "111";
-    v0["key2"] = 222l;
-    v0["key3"]["key4"] = "444";
-
-    prop.sset("save", v0);
-    return v0;
-}
-
-std::string       testClass::class_name;
-zend_class_entry* testClass::class_entry;
+#ifdef DEBUG
+#include "test.cpp"
+#endif
 
 extern "C" {
     CORE_EXPORT zend_module_entry* get_module() {
@@ -64,8 +41,27 @@ extern "C" {
             .property("_conf", ZEND_ACC_PROTECTED | ZEND_ACC_STATIC)
             .property("_cache", ZEND_ACC_PROTECTED | ZEND_ACC_STATIC)
             .property("_mysqli", ZEND_ACC_PROTECTED);
-        
         module.add(c1);
+        
+        static php::class_declare<database_redis> c2("yafa_database_redis");
+        c2
+            .method("init"      , database_redis::init      )
+            .method("get_master", database_redis::get_master)
+            .method("get_slave" , database_redis::get_slave )
+            .property("_conf", ZEND_ACC_PROTECTED | ZEND_ACC_STATIC)
+            .property("_cache", ZEND_ACC_PROTECTED | ZEND_ACC_STATIC);
+        module.add(c2);
+        
+        static php::class_declare<database_ssdb> c3("yafa_database_ssdb");
+        c3
+            .method("init"      , database_ssdb::init      )
+            .method("get_master", database_ssdb::get_master)
+            .method("get_slave" , database_ssdb::get_slave )
+            .property("_conf", ZEND_ACC_PROTECTED | ZEND_ACC_STATIC)
+            .property("_cache", ZEND_ACC_PROTECTED | ZEND_ACC_STATIC)
+            .property("prefix", ZEND_ACC_PUBLIC);
+        module.add(c3);
+        
         return module;
     }
 };

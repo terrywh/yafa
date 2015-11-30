@@ -77,6 +77,10 @@ namespace php {
         own = true;
         ZVAL_BOOL(&val, b);
     }
+    value::value(const double& d) {
+        own = true;
+        ZVAL_DOUBLE(&val, d);
+    }
     // -------------------------------------------------------------------------
     // 赋值
     value& value::operator=(const value& orig) {
@@ -111,6 +115,13 @@ namespace php {
         update_parent();
         return *this;
     }
+    value& value::operator=(const long long& l) {
+        clear();
+        own = true;
+        ZVAL_LONG(&val, l);
+        update_parent();
+        return *this;
+    }
     value& value::operator=(const bool& b) {
         clear();
         own = true;
@@ -124,9 +135,15 @@ namespace php {
         ZVAL_ZVAL(&val, const_cast<zval*>(v), 1, 0);
         return *this;
     }
+    value& value::operator=(const double& d) {
+        clear();
+        own = true;
+        ZVAL_DOUBLE(&val, d);
+        return *this;
+    }
     // ---------------------------------------------------------------------
     // 数组
-    value value::operator[](zend_ulong idx) {
+    value value::operator[](int idx) {
         if(!is_type(IS_ARRAY)){
             value v;
             v.key_idx = idx;
@@ -201,7 +218,7 @@ namespace php {
         
     }
     
-    bool value::__isset(zend_ulong idx) const {
+    bool value::__isset(int idx) const {
         if(!is_type(IS_ARRAY)){
             return false;
         }

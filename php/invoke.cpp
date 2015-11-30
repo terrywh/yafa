@@ -65,4 +65,14 @@ namespace php {
        
         return std::move(r);
     }
+    
+//    value create_object(zend_class_entry* ce, const parameter& params) {
+//        value obj;
+//        object_init_ex(&obj.val, ce);
+//        std::vector<zval> param;
+//        for(size_t i=0;i<params.size;++i) {
+//            param.push_back(params[i].val);
+//        }
+//        call_method(&obj, "__construct", params);
+//    }
 }

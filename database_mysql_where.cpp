@@ -58,16 +58,16 @@ void database_mysql_where::append_item(const std::string& key, php::value& val) 
             _sql.append(op);
         }else if(op == "<>") {
             _sql.append(" BETWEEN ");
-            php::value v0 = val[0ul];
-            php::value v1 = val[1ul];
+            php::value v0 = val[0];
+            php::value v1 = val[1];
             append_val(v0);
             _sql.append(" AND ");
             append_val(v1);
             return;
         }else if(op == "><") {
             _sql.append(" NOT BETWEEN ");
-            php::value v0 = val[0ul];
-            php::value v1 = val[1ul];
+            php::value v0 = val[0];
+            php::value v1 = val[1];
             append_val(v0);
             _sql.append(" AND ");
             append_val(v1);

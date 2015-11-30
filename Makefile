@@ -1,16 +1,18 @@
 PHP_CONFIG?=/data/server/php/bin/php-config
-PHP_INCLUES=$(shell $(PHP_CONFIG) --includes)
+PHP_INCLUDE=$(shell $(PHP_CONFIG) --includes)
+BOOST_INCLUDE?= -I/data/htdocs/boost
 PHP_EXTENSION_DIR=$(shell $(PHP_CONFIG) --extension-dir)
 CONF?=Release
 
-CORE_OBJECTS=php/invoke.o php/value_iterator.o php/value.o php/parameter.o php/class.o php/property.o php/module.o
-YAFA_OBJECTS=database_mysql_where.o database_mysql.o extension.o
+CORE_OBJECTS= php/invoke.o php/value_iterator.o php/value.o php/parameter.o php/class.o php/property.o php/module.o
+DATABASE_OBJECTS= database_ssdb.o database_redis.o database_mysql_where.o database_mysql.o extension.o
+DEPS_LIBRARY= deps/libssdb-client.a deps/libhiredis.a
 TARGET=yafa.so
 
 CXXFLAGS+= -std=c++11 -m64 -fPIC
 
 ifeq ($(CONF),Debug)
-	CXXFLAGS+= -O0 -g
+	CXXFLAGS+= -DDEBUG=1 -O0 -g
 else
 	CXXFLAGS+= -O2
 endif
@@ -20,7 +22,7 @@ all:$(TARGET) install
 	@echo done.
 
 test:
-	@echo $(PHP_INCLUES)
+	@echo $(PHP_INCLUDE)
 	@echo $(PHP_EXTENSION_DIR)
 clean:
 	rm -f $(CORE_OBJECTS)
@@ -28,10 +30,10 @@ clean:
 	rm -f $(TARGET)
 
 $(CORE_OBJECTS):%.o:%.cpp
-	g++ $(CXXFLAGS) $(PHP_INCLUES) -c $^ -o $@
-$(YAFA_OBJECTS):%.o:%.cpp
-	g++ $(CXXFLAGS) $(PHP_INCLUES) -c $^ -o $@
-$(TARGET):$(CORE_OBJECTS) $(YAFA_OBJECTS)
+	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+$(DATABASE_OBJECTS):%.o:%.cpp
+	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+$(TARGET):$(CORE_OBJECTS) $(DATABASE_OBJECTS) $(DEPS_LIBRARY) 
 	g++ $(CXXFLAGS) -shared $^ -static-libstdc++ -o $@
 install:$(TARGET)
 	rm -f $(PHP_EXTENSION_DIR)/$(TARGET)

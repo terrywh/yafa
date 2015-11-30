@@ -24,7 +24,7 @@ public:
     zval* get(size_t idx) const;
     size_t size;
 private:
-    zval*  p_val;
+    zval*  p_zval;
     bool   b_array;
 };
 }

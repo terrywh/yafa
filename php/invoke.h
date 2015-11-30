@@ -19,6 +19,8 @@ namespace php {
     value call_method_0(value* obj, const std::string& method);
     value call_method_1(value* obj, const std::string& method, const value& a1);
     value call_method_2(value* obj, const std::string& method, const value& a1, const value& a2);
+    
+    // value create_object(zend_class_entry* ce);
 }
 
 #endif /* PHP_INVOKE_H */
