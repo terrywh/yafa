@@ -5,6 +5,8 @@ YAFA
 
 MySQLi 包装
 ---
+依赖 mysqli 系统内置扩展。
+
 ``` php
 class yafa_database_mysql {
 	/**
@@ -108,6 +110,7 @@ class yafa_database_mysql {
 
 [PhpRedis](https://github.com/phpredis/phpredis) 配置协助
 ---
+**依赖 phpredis 扩展。**
 注：从 `get_master` | `get_slave` 返回的即就是 `Redis` 类型，非包装类型。
 
 ``` php
@@ -162,7 +165,7 @@ class yafa_database_ssdb {
 }
 ```
 
-注：SSDB 客户端无法直接包装到扩展中，需要一些自定义步骤，同时增加了 数据接收 timeout 设置；
+注：SSDB 提供的 CPP 客户端 静态库 无法直接包装到扩展中，需要一些编译方面的调整，同时为了 Web 项目考虑增加了 数据接收 timeout 设置功能；
 > 
 > 1. 使用 build.sh 生成 build_config.mk 后停止编译；
 > 2. 在 src/util 下：
