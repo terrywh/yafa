@@ -305,7 +305,11 @@ php::value database_ssdb::parse(const std::vector<std::string>* reply, int flag)
         for(int i=1;i<reply->size();i++) {
             v[k] = database_ssdb::parse_item(reply->at(i), flag);
         }
+        if(v.length() == 1) {
+            return v[0];
+        }
     }
+    
     return std::move(v);
 }
 
