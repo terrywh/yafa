@@ -1,9 +1,9 @@
 YAFA
 ====
 
-仅支持 PHP7。扩展补充了部分 [Yaf](https://github.com/laruence/yaf/tree/php7) 未提供的常用功能。
+仅支持 PHP7。扩展补充了部分我们在使用 [Yaf](https://github.com/laruence/yaf/tree/php7) 框架时觉得非常需要但未提供的常用功能。
 
-MySQLi 包装
+[MySQLi](http://php.net/manual/en/book.mysqli.php) 包装
 ---
 依赖 mysqli 系统内置扩展。
 
