@@ -1,5 +1,5 @@
 #include "../core.h"
-
+#include "ext/standard/info.h"
 namespace php {
 
     module* module::p_self = nullptr;
@@ -29,7 +29,12 @@ namespace php {
         return SUCCESS;
     }
     void module::info(ZEND_MODULE_INFO_FUNC_ARGS) {
+        php_info_print_table_start();
+	php_info_print_table_header(2, "yafa support", "enabled");
+	php_info_print_table_row(2, "Version", _module_entry.version);
+	php_info_print_table_end();
 
+	DISPLAY_INI_ENTRIES();
     }
 
     zend_module_entry module::_module_entry = {
