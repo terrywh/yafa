@@ -7,10 +7,11 @@
 namespace ssdb{
 
 class ClientImpl : public Client{
+public:
+	Link *link;
 private:
 	friend class Client;
 	
-	Link *link;
 	std::vector<std::string> resp_;
 public:
 	ClientImpl();

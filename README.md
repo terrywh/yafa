@@ -106,7 +106,8 @@ class yafa_database_mysql {
 }
 ```
 
-[PhpRedis](https://github.com/phpredis/phpredis) 包装 
+[PhpRedis](https://github.com/phpredis/phpredis) 配置协助
+注：从 `get_master` | `get_slave` 返回的即就是 `Redis` 类型，非包装类型。
 ---
 ``` php
 class yafa_database_redis {
@@ -121,15 +122,72 @@ class yafa_database_redis {
 	 * 		["host"=>"127.0.0.1", "port"=>3306, "auth"="passwd", "prefix"=>"pre_"],
 	 *	]
 	 * ]
-	 * 当配置中存在 "auth" 将会在实例化 phpredis 对象时自动调用 auth 方法
+	 * 当配置中存在 "auth" 将会在实例化 phpredis 对象后，调用 `auth($auth)` 方法；
+	 * 当配置中存在 "prefix" 将会在实例化 phpredis 对象后，调用 `setOption(Reids::OPT_PREFIX, $prefix)`
 	 */
 	public static function init($config) : bool;
-	public static function get_master($index = 0) : yafa_database_redis;
-	public static function get_slave($index = 0)  : yafa_database_redis;
-
-	public function __construct(redis $redis);
-	public function auth() { throw "please use 'auth' key in config"; }
-	public function select($index);
+	public static function get_master($index = 0) : Redis;
+	public static function get_slave($index = 0)  : Redis;
 	// 其他方法代理到 PhpRedis 实例，并对第一个参数添加 prefix 前缀
 }
 ```
+
+[SSDB](https://github.com/ideawu/ssdb) 扩展客户端
+---
+
+```
+class yafa_database_ssdb {
+	/**
+	 * $config 包含数据库配置，形式如下：
+	 * [
+	 *	"master"=>[
+	 *		["host"=>"127.0.0.1", "port"=>3306, "auth"="passwd", "prefix"=>"pre_"],
+	 *		["host"=>"127.0.0.1", "port"=>3306, "auth"="passwd", "prefix"=>"pre_"],
+	 *	],
+	 *	"slave"=>[
+	 * 		["host"=>"127.0.0.1", "port"=>3306, "auth"="passwd", "prefix"=>"pre_"],
+	 *	]
+	 * ]
+	 * 当配置中存在 "auth" 将会在实例化 phpredis 对象后，调用 `auth($auth)` 方法；
+	 * 当配置中存在 "prefix" 将会对所有 KEY 进行附加前缀操作
+	 */
+	public static function init($config) : bool;
+	public static function get_master($index = 0) : yafa_database_ssdb;
+	public static function get_slave($index = 0)  : yafa_database_ssdb;
+	/**
+	 * 实现对 ssdb 调用的包装，目前与 PHP 版本的客户端支持命令一致
+	 */
+	public function __call($cmd, $args) : mixed;
+}
+```
+
+注：SSDB 客户端无法直接包装到扩展中，需要一些自定义步骤，同时增加了 数据接收 timeout 设置；
+
+> 使用 SSDB 内提供的 CPP Client 使用以下步骤获得 libssdb-client.a：
+> 
+> 1. 使用 build.sh 生成 build_config.mk 后停止编译；
+> 2. 在 src/util 下：
+> ``` bash
+> make bytes.o CFLAGS="-D__STDC_FORMAT_MACROS -fPIC"
+> ```
+> 3. 在 src/net 下：
+> ``` bash
+> make link.o CFLAGS="-D__STDC_FORMAT_MACROS -fPIC"
+> ```
+> 4. src/client/SSDB_client.h 修改 connect 加入 timeout 参数:
+> ``` cpp
+> static Client* connect(const char *ip, int port, int timeout = 2000);
+> static Client* connect(const std::string &ip, int port, int timeout = 2000);
+> ```
+> 5. src/client/SSDB_impl.cpp 对应给 connect 函数加上 timeout 参数并在完成连接后增加：
+> ``` cpp
+> // [-------
+> struct timeval to;  
+> to.tv_sec = timeout / 1000;
+> to.tv_usec = timeout * 1000 % 1000000;
+> setsockopt(client->link->fd(), SOL_SOCKET, SO_RCVTIMEO, &to, sizeof(to));
+> // ------]
+> return client;
+> ```
+> 6. 在 src/client 下 make CFLAGS="-fPIC" 得到静态库
+

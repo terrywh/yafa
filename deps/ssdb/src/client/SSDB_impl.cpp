@@ -54,11 +54,11 @@ ClientImpl::~ClientImpl(){
 	}
 }
 
-Client* Client::connect(const char *ip, int port){
-	return Client::connect(std::string(ip), port);
+Client* Client::connect(const char *ip, int port, int timeout){
+	return Client::connect(std::string(ip), port, timeout);
 }
 
-Client* Client::connect(const std::string &ip, int port){
+Client* Client::connect(const std::string &ip, int port, int timeout){
 	static bool inited = false;
 	if(!inited){
 		inited = true;
@@ -70,6 +70,12 @@ Client* Client::connect(const std::string &ip, int port){
 		delete client;
 		return NULL;
 	}
+	// [-------
+	struct timeval to;  
+	to.tv_sec = timeout / 1000;
+	to.tv_usec = timeout * 1000 % 1000000;
+	setsockopt(client->link->fd(), SOL_SOCKET, SO_RCVTIMEO, &to, sizeof(to));
+	// ------]
 	return client;
 }
 

@@ -49,24 +49,25 @@ $ssdb_config = [
 // echo "one: ", $m->one("table", ["a"=>"aaaa"]), "\n";
 // echo "error: [", isset($m->error),"] ", $m->error, "\n";
 
-yafa_database_redis::init($redis_config);
-$db = yafa_database_redis::get_master();
-var_dump($db);
-var_dump($db->get("abc"));
-var_dump($db->hgetall("hash"));
-var_dump($db->smembers("set"));
-
-var_dump( $db->multi()->get("abc")->hgetall("hash")->exec() );
-
-$c = 0;
-var_dump($db->scan($c));
-
-
-// yafa_database_ssdb::init($ssdb_config);
-// $db = yafa_database_ssdb::get_master();
+// yafa_database_redis::init($redis_config);
+// $db = yafa_database_redis::get_master();
 // var_dump($db);
 // var_dump($db->get("abc"));
 // var_dump($db->hgetall("hash"));
-// var_dump($db->zscan("zset", "", "", "", 10));
+// var_dump($db->smembers("set"));
+
+// var_dump( $db->multi()->get("abc")->hgetall("hash")->exec() );
+
+// $c = 0;
+// var_dump($db->scan($c));
+
+
+yafa_database_ssdb::init($ssdb_config);
+$db = yafa_database_ssdb::get_master();
+var_dump($db);
+var_dump($db->exists("abc"));
+var_dump($db->get("abc"));
+var_dump($db->hgetall("hash"));
+var_dump($db->zscan("zset", "", "", "", 10));
 
 exit(0);

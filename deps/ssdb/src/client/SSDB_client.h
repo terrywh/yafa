@@ -64,8 +64,8 @@ private:
  */
 class Client{
 public:
-	static Client* connect(const char *ip, int port);
-	static Client* connect(const std::string &ip, int port);
+	static Client* connect(const char *ip, int port, int timeout = 2000);
+	static Client* connect(const std::string &ip, int port, int timeout = 2000);
 	Client(){};
 	virtual ~Client(){};
 

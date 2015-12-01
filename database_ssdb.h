@@ -10,6 +10,15 @@
 
 #include "deps/SSDB_client.h"
 
+enum database_ssdb_flags: int {
+    FLAG_PREFIX_NONE        = 1,
+    FLAG_PREFIX_MULTI_JUMP  = 2, // key val key val 间隔形式
+    FLAG_PREFIX_MULTI_ALL   = 4,
+    FLAG_RETURN_LONG        = 8,
+    FLAG_RETURN_DBL         = 16,
+    FLAG_RETURN_BOOL        = 32,
+    FLAG_RETURN_KV          = 64,
+};
 
 class database_ssdb: public php::class_base {
 public:
@@ -27,8 +36,9 @@ public:
     virtual ~database_ssdb();
 private:
     static php::value create(php::value& config);
-//    static php::value parse(redisReply* reply, bool with_key = false);
-    static std::map<std::string, bool> without_prefix;
+    static php::value parse(const std::vector<std::string>* reply, int flag);
+    static php::value parse_item(const std::string& r, int flag);
+    static std::map<std::string, int> cmd_flag;
     ssdb::Client* pssdb = nullptr;
     std::string   prefix;
 };
