@@ -107,8 +107,9 @@ class yafa_database_mysql {
 ```
 
 [PhpRedis](https://github.com/phpredis/phpredis) 配置协助
-注：从 `get_master` | `get_slave` 返回的即就是 `Redis` 类型，非包装类型。
 ---
+注：从 `get_master` | `get_slave` 返回的即就是 `Redis` 类型，非包装类型。
+
 ``` php
 class yafa_database_redis {
 	/**
@@ -135,7 +136,7 @@ class yafa_database_redis {
 [SSDB](https://github.com/ideawu/ssdb) 扩展客户端
 ---
 
-```
+``` php
 class yafa_database_ssdb {
 	/**
 	 * $config 包含数据库配置，形式如下：
@@ -162,8 +163,6 @@ class yafa_database_ssdb {
 ```
 
 注：SSDB 客户端无法直接包装到扩展中，需要一些自定义步骤，同时增加了 数据接收 timeout 设置；
-
-> 使用 SSDB 内提供的 CPP Client 使用以下步骤获得 libssdb-client.a：
 > 
 > 1. 使用 build.sh 生成 build_config.mk 后停止编译；
 > 2. 在 src/util 下：
