@@ -98,20 +98,20 @@ class yafa_database_mysql {
 	 */
 	public function select(string $table, array|string $column, array|string $cond, array|string $group, array|string $order, array|string|integer $limit);
 	/**
-	 * 获取一条数据，功能基本类似：
+	 * 获取一条数据，功能基本等同于：
 	 * `$mysqli->query("SELECT ....... LIMIT 1")->fetch_assoc()`;
 	 */
 	public function one(string $table, array|string $cond, array|string $order);
 	/**
-	 * ... 其他访问带地道 mysqli
-	 */
+	 * ... 其他调用转接到 mysqli
+	 */ 
 }
 ```
 
 [PhpRedis](https://github.com/phpredis/phpredis) 配置协助
 ---
 **依赖 phpredis 扩展。**
-注：从 `get_master` | `get_slave` 返回的即就是 `Redis` 类型，非包装类型。
+注：从 `get_master` | `get_slave` 返回的即就是 `Redis` 类型实例，非包装类型。
 
 ``` php
 class yafa_database_redis {
@@ -138,7 +138,7 @@ class yafa_database_redis {
 
 [SSDB](https://github.com/ideawu/ssdb) 扩展客户端
 ---
-
+直接使用 SSDB CPP Client 封装。
 ``` php
 class yafa_database_ssdb {
 	/**
