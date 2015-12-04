@@ -6,9 +6,10 @@ CONF?=Release
 
 CORE_OBJECTS= php/invoke.o php/value_iterator.o php/value.o php/parameter.o php/class.o php/property.o php/module.o
 DATABASE_OBJECTS= database_ssdb.o database_redis.o database_mysql_where.o database_mysql.o extension.o
-DEPS_LIBRARY= deps/libssdb-client.a deps/libhiredis.a
+DEPS_LIBRARY= deps/libssdb-client.a
 TARGET=yafa.so
 
+LDFLAGS+= -Wl,-rpath,/usr/local/lib64
 CXXFLAGS+= -std=c++11 -m64 -fPIC
 
 ifeq ($(CONF),Debug)
@@ -34,7 +35,7 @@ $(CORE_OBJECTS):%.o:%.cpp
 $(DATABASE_OBJECTS):%.o:%.cpp
 	clang++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 $(TARGET):$(CORE_OBJECTS) $(DATABASE_OBJECTS) $(DEPS_LIBRARY) 
-	clang++ $(CXXFLAGS) -shared $^ -static-libstdc++ -o $@
+	clang++ $(CXXFLAGS) $(LDFLAGS) -shared $^ -o $@
 install:$(TARGET)
 	rm -f $(PHP_EXTENSION_DIR)/$(TARGET)
 	cp $(TARGET) $(PHP_EXTENSION_DIR)/

@@ -7,9 +7,6 @@
 #ifndef DATABASE_REDIS_H
 #define DATABASE_REDIS_H
 
-#include "deps/hiredis.h"
-
-
 class database_redis_reply_cleanup {
 public:
     database_redis_reply_cleanup(redisReply* reply):_reply(reply) {}
