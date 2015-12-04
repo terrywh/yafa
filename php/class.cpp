@@ -90,11 +90,11 @@ namespace php {
             p_store->self->__set(std::string(z_name->val, z_name->len), value(z_val, false)); // 默认实现 “未定义属性”
             return;
         }
-        if(info->flags & ZEND_ACC_PUBLIC == 0) {
+        if((info->flags & ZEND_ACC_PUBLIC) == 0) {
             zend_throw_error(nullptr, "property \"%s\" is not public", z_name->val);
             return;
         }
-        if(info->flags & ZEND_ACC_STATIC == 0) {
+        if((info->flags & ZEND_ACC_STATIC) == 0) {
             zend_update_property_ex(Z_OBJCE_P(getThis()), getThis(), z_name, z_val);
         }else{
             zend_update_static_property(Z_OBJCE_P(getThis()), z_name->val, z_name->len, z_val);

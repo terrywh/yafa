@@ -72,6 +72,7 @@
           </incDir>
           <preprocessorList>
             <Elem>DEBUG=1</Elem>
+            <Elem>__cplusplus=201103L</Elem>
           </preprocessorList>
         </ccTool>
         <linkerTool>
@@ -152,11 +153,15 @@
           <architecture>2</architecture>
           <standard>8</standard>
           <incDir>
+            <pElem>../boost</pElem>
             <pElem>../php_include</pElem>
             <pElem>../php_include/Zend</pElem>
             <pElem>../php_include/main</pElem>
             <pElem>../php_include/TSRM</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>__cplusplus=201103L</Elem>
+          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

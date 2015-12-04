@@ -1,5 +1,5 @@
 PHP_CONFIG?=/data/server/php/bin/php-config
-PHP_INCLUDE=$(shell $(PHP_CONFIG) --includes)
+PHP_INCLUDE=$(shell $(PHP_CONFIG) --includes | sed 's/-I/-isystem /g')
 BOOST_INCLUDE?= -I/data/htdocs/boost
 PHP_EXTENSION_DIR=$(shell $(PHP_CONFIG) --extension-dir)
 CONF?=Release
@@ -30,11 +30,11 @@ clean:
 	rm -f $(TARGET)
 
 $(CORE_OBJECTS):%.o:%.cpp
-	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+	clang++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 $(DATABASE_OBJECTS):%.o:%.cpp
-	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+	clang++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 $(TARGET):$(CORE_OBJECTS) $(DATABASE_OBJECTS) $(DEPS_LIBRARY) 
-	g++ $(CXXFLAGS) -shared $^ -static-libstdc++ -o $@
+	clang++ $(CXXFLAGS) -shared $^ -static-libstdc++ -o $@
 install:$(TARGET)
 	rm -f $(PHP_EXTENSION_DIR)/$(TARGET)
 	cp $(TARGET) $(PHP_EXTENSION_DIR)/
