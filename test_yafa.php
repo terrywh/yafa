@@ -2,8 +2,8 @@
 echo "test start ", microtime(), "\n";
 $mysql_config = [
 	"master"=>[
-		// ["host"=>"192.168.56.101", "port"=>3306, "user"=> "root", "pass"=>"", "db"=>"test"]
-		["host"=>"182.92.228.217", "port"=>3306, "user"=> "wuhao", "pass"=>"CrD5ivfNUBiFuLzf", "db"=>"test"]
+		["host"=>"192.168.56.1", "port"=>3306, "user"=> "root", "pass"=>"", "db"=>"mysql"]
+		//["host"=>"182.92.228.217", "port"=>3306, "user"=> "wuhao", "pass"=>"CrD5ivfNUBiFuLzf", "db"=>"test"]
 	],
 ];
 $redis_config = [
@@ -29,11 +29,10 @@ $ssdb_config = [
 yafa_database_mysql::init($mysql_config);
 // // $i = new mysqli("192.168.56.101", "wuhao", "", "test", 3306);
 $m = yafa_database_mysql::get_master();
-var_dump($m);
 // echo "format: ", $m->format("SELECT * FROM `user` LIMIT ?", 2), "\n";
 // // echo "escape:", $i->escape_string("xx'xx"), "\n";
 
-// var_dump( $m->format_query("SELECT * FROM `user` WHERE `a`=?", "abc") );
+var_dump( $m->format_query("SELECT * FROM `user`") );
 // var_dump( $m->query("select * from `aaauser`") );
 
 // echo "error: [", isset($m->error),"] ", var_dump($m->error);

@@ -172,8 +172,7 @@ php::value database_mysql::format_query(const php::parameter& param) {
     php::value sql = format(param);
     php::property prop(this);
     php::value _mysqli = prop.oget("_mysqli");
-    return sql;
-    // return php::call_method_1(&_mysqli, "query", sql);
+    return php::call_method_1(&_mysqli, "query", sql);
 }
 
 php::value database_mysql::insert(const php::parameter& param) {
