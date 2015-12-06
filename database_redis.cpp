@@ -41,7 +41,7 @@ php::value database_redis::get_master(const php::parameter& param) {
         conf = conf["master"][idx];
         if(!conf.is_type(IS_ARRAY)) {
             zend_throw_error(NULL, "illegal redis config #2");
-            return php::value();
+            return php::null;
         }
         db = database_redis::create(conf);
         cache[key] = db;
@@ -63,7 +63,7 @@ php::value database_redis::get_slave(const php::parameter& param) {
         conf = conf["slave"][idx];
         if(!conf.is_type(IS_ARRAY)) {
             zend_throw_error(NULL, "illegal redis config #2");
-            return php::value();
+            return php::null;
         }
         db = database_redis::create(conf);
         cache[key] = db;
@@ -77,7 +77,7 @@ php::value database_redis::create(php::value& config) {
     zend_eval_stringl(const_cast<char*>(create_redis.c_str()), create_redis.length(), redis.intern(), "database_redis::create");
     if(!redis.is_type(IS_OBJECT)) {
         zend_throw_error(nullptr, "failed to create Redis client");
-        return php::value();
+        return php::null;
     }
     // connect
     std::vector<zval> connect_param;

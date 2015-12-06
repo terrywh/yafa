@@ -50,12 +50,10 @@ php::value database_mysql::create(php::value& config) {
             db   = config["db"];
     if(host.empty() || port.empty() || user.empty()) {
         zend_throw_error(NULL, "illegal mysql config #3");
-        return php::value();
+        return php::null;
     }
     std::string s;
-    s.append("new ")
-        .append(database_mysql::class_name)
-        .append("(new mysqli(\"")
+    s.append("new mysqli(\"")
         .append(host)
         .append("\",\"")
         .append(user)
@@ -69,10 +67,20 @@ php::value database_mysql::create(php::value& config) {
             .append("\",");
     }
     s.append(port)
-        .append("))");
-    zval retval;
-    zend_eval_string(const_cast<char*>(s.c_str()), &retval, const_cast<char*>("yafa_database_mysql::create"));
-    return &retval;
+        .append(")");
+    php::value mysqli, object;
+    zend_eval_string(const_cast<char*>(s.c_str()), mysqli.intern(), const_cast<char*>("yafa_database_mysql::create_mysqli"));
+    php::property prop(mysqli);
+    if(!prop.oget("connect_error").is_empty()) {
+        zend_throw_error(nullptr, "failed to create mysqli");
+        return php::null;
+    }
+    
+    object_init_ex(object.intern(), database_mysql::class_entry);
+    php::_store * p_store = php::get_store(object);
+    php::parameter param(mysqli.intern(), 1);
+    p_store->self->__construct(param);
+    return std::move(object);
 }
 
 php::value database_mysql::get_master(const php::parameter& param) {
@@ -90,10 +98,12 @@ php::value database_mysql::get_master(const php::parameter& param) {
         conf = conf["master"][idx];
         if(!conf.is_type(IS_ARRAY)) {
             zend_throw_error(NULL, "illegal mysql config #2");
-            return php::value();
+            return php::null;
         }
         db = database_mysql::create(conf);
-        cache[key] = db;
+        if(db.is_type(IS_OBJECT)) {
+            cache[key] = db;
+        }
     }
     return db;
 }
@@ -112,7 +122,7 @@ php::value database_mysql::get_slave(const php::parameter& param) {
         conf = conf["slave"][idx];
         if(!conf.is_type(IS_ARRAY)) {
             zend_throw_error(NULL, "illegal mysql config #2");
-            return php::value();
+            return php::null;
         }
         db = database_mysql::create(conf);
         cache[key] = db;
@@ -123,7 +133,7 @@ php::value database_mysql::get_slave(const php::parameter& param) {
 php::value database_mysql::format(const php::parameter& param) {
     if(param.size < 1 || !param[0].is_type(IS_STRING)) {
         zend_throw_error(NULL, "format string is required");
-        return php::value();
+        return php::null;
     }
     if(param.size == 1) return param[0];
     std::string before = param[0];
@@ -171,7 +181,7 @@ php::value database_mysql::insert(const php::parameter& param) {
     php::value data = param[1];
     if(table.empty() || data.length() == 0) {
         zend_throw_error(nullptr, "table name and data is required");
-        return php::value();
+        return php::null;
     }
     std::string sql = "INSERT INTO `" + table + "`(";
     size_t length = data.length();
@@ -209,7 +219,7 @@ php::value database_mysql::remove(const php::parameter& param) {
     php::value data = param[1];
     if(table.empty() || data.length() == 0) {
         zend_throw_error(nullptr, "table name and conditions is required");
-        return php::value();
+        return php::null;
     }
     std::string sql = "DELETE FROM `"+table+"`";
     php::property prop(this);
@@ -224,7 +234,7 @@ php::value database_mysql::update(const php::parameter& param) {
     php::value  data  = param[1];
     if(table.empty() || !data.is_type(IS_ARRAY) || data.length() == 0) {
         zend_throw_error(nullptr, "table name and data is required");
-        return php::value();
+        return php::null;
     }
     std::string sql = "UPDATE `" + table + "` SET ";
     unsigned long len = data.length();
@@ -261,7 +271,7 @@ php::value database_mysql::select(const php::parameter& param) {
     php::value column = param[1];
     if(table.empty() || !column.is_type(IS_STRING) && !column.is_type(IS_ARRAY) || column.length() < 1) {
         zend_throw_error(nullptr, "table name and columns is required");
-        return php::value();
+        return php::null;
     }
     // 以下参数可选
     php::value cond   = param[2];
@@ -367,7 +377,7 @@ php::value database_mysql::one(const php::parameter& param) {
     php::value order  = param[2];
     if(table.empty()) {
         zend_throw_error(nullptr, "table name is required");
-        return php::value();
+        return php::null;
     }
     std::string sql = "SELECT * FROM `"+table+"`";
     php::property prop(this);
@@ -382,7 +392,7 @@ php::value database_mysql::one(const php::parameter& param) {
     if(rs.is_type(IS_OBJECT)) {
         return php::call_method_0(&rs, "fetch_assoc");
     }else{
-        return php::value();
+        return php::null;
     }
 }
 

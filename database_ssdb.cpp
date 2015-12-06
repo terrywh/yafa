@@ -136,7 +136,7 @@ php::value database_ssdb::get_master(const php::parameter& param) {
         conf = conf["master"][idx];
         if(!conf.is_type(IS_ARRAY)) {
             zend_throw_error(NULL, "illegal ssdb config #2");
-            return php::value();
+            return php::null;
         }
         db = database_ssdb::create(conf);
         cache[key] = db;
@@ -158,7 +158,7 @@ php::value database_ssdb::get_slave(const php::parameter& param) {
         conf = conf["slave"][idx];
         if(!conf.is_type(IS_ARRAY)) {
             zend_throw_error(NULL, "illegal ssdb config #2");
-            return php::value();
+            return php::null;
         }
         db = database_ssdb::create(conf);
         cache[key] = db;
@@ -176,15 +176,12 @@ database_ssdb::~database_ssdb() {
 }
 
 php::value database_ssdb::create(php::value& config) {
-    std::string host = config["host"];
-    zend_long   port = config["port"];
-    
-    zval obj;
-    object_init_ex(&obj, database_ssdb::class_entry);
-    php::_store * p_store = php::get_store(&obj);
+    php::value object;
+    object_init_ex(object.intern(), database_ssdb::class_entry);
+    php::_store * p_store = php::get_store(object);
     php::parameter param(config.intern(), 1);
     p_store->self->__construct(param);
-    return php::value(&obj);
+    return std::move(object);
 }
 
 
@@ -230,7 +227,7 @@ php::value database_ssdb::__call(const std::string& name, const php::parameter& 
     auto f = cmd_flag.find(uname);
     if(f == cmd_flag.end()) { // 没有找到对应的方法
         zend_throw_error(nullptr, "redis command \"%s\" not found", uname.c_str());
-        return php::value();
+        return php::null;
     }
     argv.push_back(uname);
     // 前缀处理
@@ -276,20 +273,20 @@ php::value database_ssdb::__call(const std::string& name, const php::parameter& 
     const std::vector<std::string>* reply = pssdb->request(argv);
     if(reply == nullptr || reply->size() < 1) {
         zend_throw_error(nullptr, "ssdb command \"%s\" failed #1", uname.c_str());
-        return php::value();
+        return php::null;
     }
     ssdb::Status status(reply);
     if(status.ok()) {
         // 返回值处理
         return database_ssdb::parse(reply, flag);
     }else if(status.not_found()) {
-        return php::value();
+        return php::null;
     }else if(reply->size() > 1){
         zend_throw_error(nullptr, "ssdb command \"%s\" faild #2: %s", uname.c_str(), reply->at(1).c_str());
-        return php::value();
+        return php::null;
     }else{
         zend_throw_error(nullptr, "ssdb command \"%s\" faild #3", uname.c_str());
-        return php::value();
+        return php::null;
     }
 }
 

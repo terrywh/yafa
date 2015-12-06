@@ -8,6 +8,9 @@
 #ifndef EASY_CLASS_HPP
 #define EASY_CLASS_HPP
 
+#include "value.h"
+
+
 namespace php {
     class property;
     // 实现继承
@@ -74,6 +77,9 @@ namespace php {
     
     inline _store* get_store(zval* v) {
         return (_store*)((char*)(Z_OBJ_P(v)) - offsetof(_store, obj));
+    }
+    inline _store* get_store(value v) {
+        return get_store(v.intern());
     }
 
     // 反射类

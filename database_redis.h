@@ -7,16 +7,6 @@
 #ifndef DATABASE_REDIS_H
 #define DATABASE_REDIS_H
 
-class database_redis_reply_cleanup {
-public:
-    database_redis_reply_cleanup(redisReply* reply):_reply(reply) {}
-    ~database_redis_reply_cleanup() {
-        freeReplyObject(_reply);
-    }
-private:
-    redisReply* _reply;
-};
-
 class database_redis: public php::class_base {
 public:
     static zend_class_entry* class_entry;

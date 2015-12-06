@@ -1,5 +1,5 @@
 PHP_CONFIG?=/data/server/php/bin/php-config
-PHP_INCLUDE=$(shell $(PHP_CONFIG) --includes | sed 's/-I/-isystem /g')
+PHP_INCLUDE=$(shell $(PHP_CONFIG) --includes)
 BOOST_INCLUDE?= -I/data/htdocs/boost
 PHP_EXTENSION_DIR=$(shell $(PHP_CONFIG) --extension-dir)
 CONF?=Release
@@ -9,7 +9,7 @@ DATABASE_OBJECTS= database_ssdb.o database_redis.o database_mysql_where.o databa
 DEPS_LIBRARY= deps/libssdb-client.a
 TARGET=yafa.so
 
-LDFLAGS+= -Wl,-rpath,/usr/local/lib64
+LDFLAGS+= -static-libstdc++
 CXXFLAGS+= -std=c++11 -m64 -fPIC
 
 ifeq ($(CONF),Debug)
@@ -31,11 +31,11 @@ clean:
 	rm -f $(TARGET)
 
 $(CORE_OBJECTS):%.o:%.cpp
-	clang++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 $(DATABASE_OBJECTS):%.o:%.cpp
-	clang++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 $(TARGET):$(CORE_OBJECTS) $(DATABASE_OBJECTS) $(DEPS_LIBRARY) 
-	clang++ $(CXXFLAGS) $(LDFLAGS) -shared $^ -o $@
+	g++ $(CXXFLAGS) $(LDFLAGS) -shared $^ -o $@
 install:$(TARGET)
 	rm -f $(PHP_EXTENSION_DIR)/$(TARGET)
 	cp $(TARGET) $(PHP_EXTENSION_DIR)/

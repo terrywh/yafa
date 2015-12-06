@@ -106,7 +106,7 @@ namespace php {
         // friend value create_object(zend_class_entry* ce);
     };
     
-    
+    static value null;
 }
 #endif /* PHP_VALUE_H */
 

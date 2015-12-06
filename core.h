@@ -21,18 +21,18 @@
 #include <vector>
 #include <map>
 
+extern "C" {
 #include "main/php.h"
 #include "Zend/zend_interfaces.h"
-
+#include "ext/standard/php_var.h"
+}
 
 #include "php/value_iterator.h"
 #include "php/value.h"
-
 #include "php/parameter.h"
 #include "php/class.h"
 #include "php/property.h"
 #include "php/module.h"
-
 #include "php/invoke.h"
 
 namespace php {
