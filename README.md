@@ -132,7 +132,6 @@ class yafa_database_redis {
 	public static function init($config) : bool;
 	public static function get_master($index = 0) : Redis;
 	public static function get_slave($index = 0)  : Redis;
-	// 其他方法代理到 PhpRedis 实例，并对第一个参数添加 prefix 前缀
 }
 ```
 
