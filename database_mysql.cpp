@@ -328,7 +328,8 @@ php::value database_mysql::select(const php::parameter& param) {
         }else if(limit.is_type(IS_ARRAY)) {
             int len = limit.length();
             for(auto i=limit.begin(); i!=limit.end(); ++i) {
-                sql.append(std::to_string((zend_long)php::value(i->val)));
+                zend_long ln = php::value(i->val, true); // copy 一份并作类型转换
+                sql.append(std::to_string(ln));
                 if(--len !=0) {
                     sql.push_back(',');
                 }

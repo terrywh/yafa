@@ -31,8 +31,17 @@ yafa_database_mysql::init($mysql_config);
 $m = yafa_database_mysql::get_master();
 // echo "format: ", $m->format("SELECT * FROM `user` LIMIT ?", 2), "\n";
 // // echo "escape:", $i->escape_string("xx'xx"), "\n";
-
-var_dump( $m->format_query("SELECT * FROM `user`") );
+$table = "admin_project_info";
+$start = 0; $max_page_list = 10;
+$params = array(
+	'field' => '*',
+	'cond' => array('isdel' => 0, 'fpid' => 0,),
+	'group' => null,
+	'order' => "`pid` DESC",
+	'limit' => array($start, $max_page_list),
+);
+debug_zval_dump($m);
+var_dump( $m->select($table, $params["field"], $params["cond"], $params["group"], $params["order"], $params["limit"]) );
 // var_dump( $m->query("select * from `aaauser`") );
 
 // echo "error: [", isset($m->error),"] ", var_dump($m->error);

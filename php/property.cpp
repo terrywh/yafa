@@ -11,7 +11,7 @@ namespace php {
     value property::sget(const std::string& key) {
         if(p_ce == nullptr) {
             zend_throw_error(nullptr, "get property of non-class");
-            return value();
+            return null;
         }
         zval* v = zend_read_static_property(p_ce, key.c_str(), key.length(), 0);
         return value(v, true);
@@ -19,7 +19,7 @@ namespace php {
     value property::oget(const std::string& key) {
         if(p_ce == nullptr || p_obj == nullptr) {
             zend_throw_error(nullptr, "get property of non-object");
-            return value();
+            return null;
         }
         zval rv, *v;
         v = zend_read_property(p_ce, p_obj, key.c_str(), key.length(), 0, &rv);
@@ -31,6 +31,7 @@ namespace php {
             return *this;
         }
         zend_update_static_property(p_ce, key.c_str(), key.length(), const_cast<zval*>(&r.val));
+        // r.add_ref();
         return *this;
     }
     property& property::oset(const std::string& key, const value& r) {
@@ -39,6 +40,7 @@ namespace php {
             return *this;
         }
         zend_update_property(p_ce, p_obj, key.c_str(), key.length(), const_cast<zval*>(&r.val));
+        // r.add_ref();
         return *this;
     }
     bool property::__isset(const std::string& key) {

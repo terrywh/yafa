@@ -248,9 +248,11 @@ namespace php {
     // 类型转换
     value::operator std::string() {
         if(!is_type(IS_STRING)) {
+            
             convert_to_string(const_cast<zval*>(&val));
         }
-        return std::string(Z_STRVAL(val), Z_STRLEN(val));
+        std::string str(Z_STRVAL(val), Z_STRLEN(val));
+        return std::move(str);
     }
     value::operator zend_long() {
         if(!is_type(IS_LONG)) {

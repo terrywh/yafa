@@ -82,8 +82,8 @@ namespace php {
         }
     protected:
         // 以下用于层次结构
-        std::string  key_str;
-        zend_ulong   key_idx;
+        std::string  key_str  = "";
+        zend_ulong   key_idx  = -1;
         value*       parent   = nullptr;
         bool         key_type = false;
         

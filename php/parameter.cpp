@@ -30,7 +30,7 @@ value parameter::operator [](size_t idx) const {
     if(b_array && p_zval != nullptr) {
         zval* v = zend_hash_index_find(Z_ARR_P(p_zval), idx);
         if(v == nullptr) {
-            return value();
+            return null;
         }else{
             return value(v, false);
         }
@@ -40,8 +40,7 @@ value parameter::operator [](size_t idx) const {
         value v(p_zval + idx, false); // value 对象并不持有对应的 zval*
         return std::move(v);
     }
-    
-    return value();
+    return null;
 }
 
 zval* parameter::get(size_t idx) const {

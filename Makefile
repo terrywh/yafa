@@ -5,8 +5,9 @@ PHP_EXTENSION_DIR=$(shell $(PHP_CONFIG) --extension-dir)
 CONF?=Release
 
 CORE_OBJECTS= php/invoke.o php/value_iterator.o php/value.o php/parameter.o php/class.o php/property.o php/module.o
-DATABASE_OBJECTS= database_ssdb.o database_redis.o database_mysql_where.o database_mysql.o extension.o
-DEPS_LIBRARY= deps/libssdb-client.a
+DATABASE_OBJECTS= database_ssdb.o database_redis.o database_mysql_where.o database_mysql.o
+EXTENSION_OBJECTS= extension.o
+DEPS_STATIC_LIBRARY= deps/libssdb-client.a
 TARGET=yafa.so
 
 LDFLAGS+= -static-libstdc++
@@ -27,14 +28,17 @@ test:
 	@echo $(PHP_EXTENSION_DIR)
 clean:
 	rm -f $(CORE_OBJECTS)
-	rm -f $(YAFA_OBJECTS)
+	rm -f $(DATABASE_OBJECTS)
 	rm -f $(TARGET)
 
 $(CORE_OBJECTS):%.o:%.cpp
 	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 $(DATABASE_OBJECTS):%.o:%.cpp
 	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
-$(TARGET):$(CORE_OBJECTS) $(DATABASE_OBJECTS) $(DEPS_LIBRARY) 
+$(EXTENSION_OBJECTS):%.o:%.cpp
+	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+
+$(TARGET):$(DEPS_STATIC_LIBRARY) $(CORE_OBJECTS) $(DATABASE_OBJECTS) $(EXTENSION_OBJECTS)
 	g++ $(CXXFLAGS) $(LDFLAGS) -shared $^ -o $@
 install:$(TARGET)
 	rm -f $(PHP_EXTENSION_DIR)/$(TARGET)

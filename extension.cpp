@@ -15,7 +15,7 @@
 
 extern "C" {
     CORE_EXPORT zend_module_entry* get_module() {
-        static php::module module("yafa", "0.3.1");
+        static php::module module("yafa", "0.3.2");
 //        // 加入函数
 //        module.add("testFunction", testFunction);
 //        // 加入类

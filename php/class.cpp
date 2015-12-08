@@ -3,12 +3,12 @@
 namespace php {
     value class_base::__call(const std::string& name, const parameter& param) {
         zend_throw_error(nullptr, "undefined method \"%s\"", name.c_str());
-        return value();
+        return null;
     }
         // static  value __callStatic(const std::string& name, param_t& param);
     value class_base::__get(const std::string& name) {
         zend_throw_error(nullptr, "undefined property \"%s\"", name.c_str());
-        return value();
+        return null;
     }
     bool class_base::__isset(const std::string& name) {
         return false;
@@ -217,7 +217,7 @@ namespace php {
         // 从 doc_comment 中恢复对象指针
         p_store->entry = ce;
         p_store->wrap = *((class_wrap**)(ce->info.user.doc_comment->val + 1));
-        p_store->self = p_store->wrap->create();
+        p_store->self = p_store->wrap->create_base();
         ZVAL_OBJ(&p_store->self->self, &p_store->obj);
         return &p_store->obj;
     }

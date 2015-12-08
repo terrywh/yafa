@@ -56,7 +56,7 @@ namespace php {
         void rshutdown();
     public:
         class_wrap(const std::string& name);
-        virtual class_base* create() = 0;
+        virtual class_base* create_base() = 0;
         virtual void set_class_entry(zend_class_entry* ce) = 0;
         // 添加属性
         class_wrap& property(const std::string& name, int flags);
@@ -99,7 +99,7 @@ namespace php {
             this->add_static_method(name, static_cast<static_method_t>(method));
             return *this;
         }
-        virtual class_base* create() override {
+        virtual class_base* create_base() override {
             return new T();
         }
         virtual void set_class_entry(zend_class_entry* ce) override {
