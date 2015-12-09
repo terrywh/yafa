@@ -25,6 +25,8 @@ class database_mysql:public php::class_base {
         php::value format(const php::parameter& param);
         php::value format_query(const php::parameter& param);
         php::value insert(const php::parameter& param);
+        void insert_keys(php::value& _mysqli, std::string& sql, const php::value& item);
+        void insert_vals(php::value& _mysqli, std::string& sql, const php::value& item);
         php::value remove(const php::parameter& param);
         php::value update(const php::parameter& param);
         php::value select(const php::parameter& param);

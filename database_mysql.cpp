@@ -183,8 +183,31 @@ php::value database_mysql::insert(const php::parameter& param) {
         return php::null;
     }
     std::string sql = "INSERT INTO `" + table + "`(";
-    size_t length = data.length();
-    for(auto i=data.begin(); i!=data.end(); ++i) {
+    
+    php::property prop(this);
+    php::value _mysqli = prop.oget("_mysqli");
+    
+    if(data.__isset(0)) {
+        insert_keys(_mysqli, sql, data[0]);
+        sql.append(") VALUES");
+        size_t length = data.length();
+        for(auto i=data.begin(); i!=data.end(); ++i) {
+            insert_vals(_mysqli, sql, php::value(i->val, false));
+            if(--length != 0) {
+                sql.push_back(',');
+            }
+        }
+    }else{
+        insert_keys(_mysqli, sql, data);
+        sql.append(") VALUES");
+        insert_vals(_mysqli, sql, data);
+    }
+    return php::call_method_1(&_mysqli, "query", sql);
+}
+
+void database_mysql::insert_keys(php::value& _mysqli, std::string& sql, const php::value& item) {
+    size_t length = item.length();
+    for(auto i=item.begin(); i!=item.end(); ++i) {
         sql.push_back('`');
         sql.append(std::string(ZSTR_VAL(i->key), ZSTR_LEN(i->key)));
         sql.push_back('`');
@@ -192,11 +215,12 @@ php::value database_mysql::insert(const php::parameter& param) {
             sql.push_back(',');
         }
     }
-    sql.append(") VALUES(");
-    length = data.length();
-    php::property prop(this);
-    php::value    _mysqli = prop.oget("_mysqli");
-    for(auto i=data.begin(); i!=data.end(); ++i) {
+}
+
+void database_mysql::insert_vals(php::value& _mysqli, std::string& sql, const php::value& item) {
+    size_t length = item.length();
+    sql.push_back('(');
+    for(auto i=item.begin(); i!=item.end(); ++i) {
         sql.push_back('\'');
         php::value val(i->val, false);
         if(val.is_type(IS_ARRAY)) {
@@ -210,7 +234,6 @@ php::value database_mysql::insert(const php::parameter& param) {
         }
     }
     sql.push_back(')');
-    return php::call_method_1(&_mysqli, "query", sql);
 }
 
 php::value database_mysql::remove(const php::parameter& param) {
