@@ -75,18 +75,19 @@ namespace php {
     module& module::add(const char* cname, function_t fn) {
         zend_string* name = zend_string_init(cname, strlen(cname), 1);
         module::m_functions[std::string(name->val, name->len)] = fn;
-        _function_entry.push_back({name->val, module::__call, function_argv, 2, 0});
+        _function_entry.push_back({name->val, module::__call, function_argv, 1, 0});
         return *this;
     }
 
     void module::__call(INTERNAL_FUNCTION_PARAMETERS) {
-        std::string  name(execute_data->func->internal_function.function_name->val, execute_data->func->internal_function.function_name->len);
-        zval* z_argv = nullptr;
-        int   z_size = 0;
+        zend_string* z_name = EG(current_execute_data)->func->common.function_name;
+        zval*        z_argv = nullptr;
+        int          z_size = 0;
         if(zend_parse_parameters(ZEND_NUM_ARGS(), "*", &z_argv, &z_size) == FAILURE) {
             zend_throw_error(NULL, "failed to __call");
             return;
         }
+        std::string  name(ZSTR_VAL(z_name),ZSTR_LEN(z_name));
         auto func = module::p_self->m_functions[name];
         if(func != nullptr) {
             parameter param(z_argv, z_size);
