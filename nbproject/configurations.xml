@@ -38,7 +38,6 @@
     <itemPath>database_ssdb.cpp</itemPath>
     <itemPath>database_ssdb.h</itemPath>
     <itemPath>extension.cpp</itemPath>
-    <itemPath>sign.cpp</itemPath>
     <itemPath>test.cpp</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -127,8 +126,6 @@
       <item path="php/value_iterator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="php/value_iterator.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="sign.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="test.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -220,8 +217,6 @@
       <item path="php/value_iterator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="php/value_iterator.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="sign.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="test.cpp" ex="false" tool="1" flavor2="0">
       </item>
