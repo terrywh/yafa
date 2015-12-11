@@ -2,8 +2,8 @@
 echo "test start ", microtime(), "\n";
 $mysql_config = [
 	"master"=>[
-		["host"=>"192.168.56.1", "port"=>3306, "user"=> "root", "pass"=>"", "db"=>"mysql"]
-		//["host"=>"182.92.228.217", "port"=>3306, "user"=> "wuhao", "pass"=>"CrD5ivfNUBiFuLzf", "db"=>"test"]
+		// ["host"=>"192.168.56.1", "port"=>3306, "user"=> "root", "pass"=>"", "db"=>"mysql"]
+		["host"=>"172.16.0.251", "port"=>3306, "user"=> "wuhao", "pass"=>"mysqlwuhao!", "db"=>"test"]
 	],
 ];
 $redis_config = [
@@ -40,8 +40,8 @@ $params = array(
 	'order' => "`pid` DESC",
 	'limit' => array($start, $max_page_list),
 );
-debug_zval_dump($m);
-var_dump( $m->select($table, $params["field"], $params["cond"], $params["group"], $params["order"], $params["limit"]) );
+// debug_zval_dump($m);
+// var_dump( $m->select($table, $params["field"], $params["cond"], $params["group"], $params["order"], $params["limit"]) );
 // var_dump( $m->query("select * from `aaauser`") );
 
 // echo "error: [", isset($m->error),"] ", var_dump($m->error);
@@ -49,7 +49,8 @@ var_dump( $m->select($table, $params["field"], $params["cond"], $params["group"]
 
 // echo $m->update("table", ["a"=>"b", "c"=>["c1"=>"xxx", "c2"=>"yyy"]]), "\n";
 // echo $m->update("table", ["a"=>"b", "c"=>"d"], ["a"=>"b", "c[!]"=>"d", "e[<>]"=>[100, 200], "OR"=>["f[><]"=>[300, 400], "g[~]"=>"pre_%"]]), "\n";
-// echo $m->insert("table", ["a"=>"b", "c"=>"d", "e"=>"f"]), "\n";
+echo $m->insert("table", ["a"=>"b", "c"=>"d", "e"=>"f"]), "\n";
+echo $m->insert("table", [["a"=>"b"], ["a"=>"c"], ["a"=>"c"]]), "\n";
 
 // echo "select1: ", $m->select("table", ["a","b"], ["b"=>"bbbb"], null, "`a`", [10, 50]), "\n";
 // echo "select2: ", $m->select("table", "*", ["b[!]"=>"cccc"], ["a"], ["a"=>true, "b"=>"DESC"]), "\n";
