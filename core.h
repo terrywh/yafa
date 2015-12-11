@@ -25,6 +25,7 @@ extern "C" {
 #include "main/php.h"
 #include "Zend/zend_interfaces.h"
 #include "ext/standard/php_var.h"
+#include "ext/standard/md5.h"
 }
 
 #include "php/value_iterator.h"
