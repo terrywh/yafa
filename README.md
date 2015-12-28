@@ -166,21 +166,12 @@ class yafa_database_ssdb {
 
 注：SSDB 提供的 CPP 客户端 静态库 无法直接包装到扩展中，需要一些编译方面的调整，同时为了 Web 项目考虑增加了 数据接收 timeout 设置功能；
 > 
-> 1. 使用 build.sh 生成 build_config.mk 后停止编译；
-> 2. 在 src/util 下：
-> ``` bash
-> make bytes.o CFLAGS="-D__STDC_FORMAT_MACROS -fPIC"
-> ```
-> 3. 在 src/net 下：
-> ``` bash
-> make link.o CFLAGS="-D__STDC_FORMAT_MACROS -fPIC"
-> ```
-> 4. src/client/SSDB_client.h 修改 connect 加入 timeout 参数:
+> 1. src/client/SSDB_client.h 修改 connect 加入 timeout 参数:
 > ``` cpp
 > static Client* connect(const char *ip, int port, int timeout = 2000);
 > static Client* connect(const std::string &ip, int port, int timeout = 2000);
 > ```
-> 5. src/client/SSDB_impl.cpp 对应给 connect 函数加上 timeout 参数并在完成连接后增加：
+> 2. src/client/SSDB_impl.cpp 对应给 connect 函数加上 timeout 参数并在完成连接后增加：
 > ``` cpp
 > // [-------
 > struct timeval to;  
@@ -190,5 +181,4 @@ class yafa_database_ssdb {
 > // ------]
 > return client;
 > ```
-> 6. 在 src/client 下 make CFLAGS="-fPIC" 得到静态库
 

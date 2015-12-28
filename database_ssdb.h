@@ -8,8 +8,6 @@
 #ifndef DATABASE_SSDB_H
 #define DATABASE_SSDB_H
 
-#include "deps/SSDB_client.h"
-
 enum database_ssdb_flags: int {
     FLAG_PREFIX_NONE        = 1,
     FLAG_PREFIX_MULTI_JUMP  = 2, // key val key val 间隔形式
@@ -19,6 +17,10 @@ enum database_ssdb_flags: int {
     FLAG_RETURN_BOOL        = 32,
     FLAG_RETURN_KV          = 64,
 };
+
+namespace ssdb {
+    class Client;
+}
 
 class database_ssdb: public php::class_base {
 public:

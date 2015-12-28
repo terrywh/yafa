@@ -7,6 +7,7 @@ CONF?=Release
 CORE_OBJECTS= php/invoke.o php/value_iterator.o php/value.o php/parameter.o php/class.o php/property.o php/module.o
 DATABASE_OBJECTS= database_ssdb.o database_redis.o database_mysql_where.o database_mysql.o
 EXTENSION_OBJECTS= extension.o
+SSDB_OBJECTS= deps/ssdb/src/util/bytes.o deps/ssdb/src/net/link.o deps/ssdb/src/client/SSDB_impl.o
 DEPS_STATIC_LIBRARY= deps/libssdb-client.a
 TARGET=yafa.so
 
@@ -29,17 +30,20 @@ test:
 clean:
 	rm -f $(CORE_OBJECTS)
 	rm -f $(DATABASE_OBJECTS)
+	rm -f $(SSDB_OBJECTS)
 	rm -f $(TARGET)
 
 $(CORE_OBJECTS):%.o:%.cpp
 	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 $(DATABASE_OBJECTS):%.o:%.cpp
 	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+$(SSDB_OBJECTS):%.o:%.cpp
+	g++ -D__STDC_FORMAT_MACROS -Ideps/src -fPIC -c $^ -o $@
 $(EXTENSION_OBJECTS):%.o:%.cpp
 	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
 
-$(TARGET):$(DEPS_STATIC_LIBRARY) $(CORE_OBJECTS) $(DATABASE_OBJECTS) $(EXTENSION_OBJECTS)
-	g++ $(CXXFLAGS) $(LDFLAGS) -shared $^ -o $@
+$(TARGET):$(CORE_OBJECTS) $(SSDB_OBJECTS) $(DATABASE_OBJECTS) $(EXTENSION_OBJECTS)
+	g++ $(CXXFLAGS) $(LDFLAGS) $^ -shared -o $@
 install:$(TARGET)
 	rm -f $(PHP_EXTENSION_DIR)/$(TARGET)
 	cp $(TARGET) $(PHP_EXTENSION_DIR)/

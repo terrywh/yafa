@@ -2,6 +2,8 @@
 #include "core.h"
 #include "database_ssdb.h"
 
+#include "deps/SSDB_client.h"
+
 std::string       database_ssdb::class_name;
 zend_class_entry* database_ssdb::class_entry;
 
