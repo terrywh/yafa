@@ -1,6 +1,6 @@
 PHP_CONFIG?=/data/server/php/bin/php-config
 PHP_INCLUDE=$(shell $(PHP_CONFIG) --includes)
-BOOST_INCLUDE?= -I/data/htdocs/boost
+BOOST_PATH?=/data/htdocs/boost
 PHP_EXTENSION_DIR=$(shell $(PHP_CONFIG) --extension-dir)
 CONF?=Release
 
@@ -34,13 +34,13 @@ clean:
 	rm -f $(TARGET)
 
 $(CORE_OBJECTS):%.o:%.cpp
-	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+	g++ $(CXXFLAGS) -I$(BOOST_PATH) $(PHP_INCLUDE) -c $^ -o $@
 $(DATABASE_OBJECTS):%.o:%.cpp
-	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+	g++ $(CXXFLAGS) -I$(BOOST_PATH) $(PHP_INCLUDE) -c $^ -o $@
 $(SSDB_OBJECTS):%.o:%.cpp
-	g++ -D__STDC_FORMAT_MACROS -Ideps/src -fPIC -c $^ -o $@
+	g++ -D__STDC_FORMAT_MACROS -Ideps/ssdb/src -fPIC -c $^ -o $@
 $(EXTENSION_OBJECTS):%.o:%.cpp
-	g++ $(CXXFLAGS) $(BOOST_INCLUDE) $(PHP_INCLUDE) -c $^ -o $@
+	g++ $(CXXFLAGS) -I$(BOOST_PATH) $(PHP_INCLUDE) -c $^ -o $@
 
 $(TARGET):$(CORE_OBJECTS) $(SSDB_OBJECTS) $(DATABASE_OBJECTS) $(EXTENSION_OBJECTS)
 	g++ $(CXXFLAGS) $(LDFLAGS) $^ -shared -o $@
