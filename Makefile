@@ -21,7 +21,7 @@ else
 endif
 
 .PHONY:all clean install test environ
-all:$(TARGET) install
+all:$(TARGET)
 	@echo done.
 
 test:
