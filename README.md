@@ -51,8 +51,11 @@ class yafa_database_mysql {
 	public function format_query(string $format, ...);
 	/**
 	 * $data 指定要保存的数据
-	 * 1. 顶级 KEY 为字符串时，$data 如果存在 二级 数组（类似 `$data = ['a'=>['1','2','3'], 'b'=>'xxx'];`）将自动使用 `json_encode` 进行序列化；
-	 * 2. 存在下标为 0 的顶级 KEY 时，将拼接批量插入，拼接类似 `INSERT INTO ``table`` VALUES(aaaa),(bbbbb),(cccc)` 形式的 SQL；
+	 * 1. 顶级 KEY 为字符串时，$data 如果存在 二级 数组
+	 	类似 `$data = ['a'=>['1','2','3'], 'b'=>'xxx'];`
+	 	将自动使用 `json_encode` 进行序列化；
+	 * 2. 存在下标为 0 的顶级 KEY 时，将拼接批量插入，
+	 	类似 `INSERT INTO ``table`` VALUES(aaaa),(bbbbb),(cccc)` 形式的 SQL；
 	 */
 	public function insert(string $table, array $data): bool;
 	/**
