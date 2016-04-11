@@ -12,6 +12,7 @@ class database_mysql:public php::class_base {
     private:
         static std::string    MASTER;
         static std::string    SLAVE;
+        std::string           last_query;
     public:
         static std::string       class_name;
         static zend_class_entry* class_entry;

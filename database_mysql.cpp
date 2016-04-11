@@ -172,6 +172,7 @@ php::value database_mysql::format_query(const php::parameter& param) {
     php::value sql = format(param);
     php::property prop(this);
     php::value _mysqli = prop.oget("_mysqli");
+    last_query = (std::string)sql;
     return php::call_method_1(&_mysqli, "query", sql);
 }
 
@@ -202,6 +203,7 @@ php::value database_mysql::insert(const php::parameter& param) {
         sql.append(") VALUES");
         insert_vals(_mysqli, sql, data);
     }
+    last_query = sql;
     return php::call_method_1(&_mysqli, "query", sql);
 }
 
@@ -248,6 +250,7 @@ php::value database_mysql::remove(const php::parameter& param) {
     php::value    _mysqli = prop.oget("_mysqli");
     database_mysql_where where(_mysqli, sql);
     where.build(data);
+    last_query = sql;
     return php::call_method_1(&_mysqli, "query", sql);
 }
 
@@ -285,6 +288,7 @@ php::value database_mysql::update(const php::parameter& param) {
     }else{
         zend_error(E_NOTICE, "database update without conditions");
     }
+    last_query = sql;
     return php::call_method_1(&_mysqli, "query", sql);
 }
 
@@ -359,6 +363,7 @@ php::value database_mysql::select(const php::parameter& param) {
             }
         }
     }
+    last_query = sql;
     return php::call_method_1(&_mysqli, "query", sql);
 }
 
@@ -411,6 +416,7 @@ php::value database_mysql::one(const php::parameter& param) {
     }
     build_order(sql, order);
     sql.append(" LIMIT 1");
+    last_query = sql;
     php::value rs = php::call_method_1(&_mysqli, "query", sql);
     if(rs.is_type(IS_OBJECT)) {
         return php::call_method_0(&rs, "fetch_assoc");
@@ -427,6 +433,10 @@ php::value database_mysql::__call(const std::string& name, const php::parameter&
     }
     php::property prop(this);
     php::value    _mysqli = prop.oget("_mysqli");
+    if(name == "query") {
+        convert_to_string(&params[0])
+        last_query.assign(Z_STRVAL(params[0]),Z_STRLEN(params[0]));
+    }
     return php::call_method(&_mysqli, name, params);
 }
 bool database_mysql::__isset(const std::string& name) {
@@ -437,6 +447,9 @@ bool database_mysql::__isset(const std::string& name) {
     return prop.__isset(name);
 }
 php::value database_mysql::__get(const std::string& name) {
+    if(name == "last_query") {
+        return last_query;
+    }
     php::property self(this);
     php::value    _mysqli = self.oget("_mysqli");
     php::property prop(_mysqli);
